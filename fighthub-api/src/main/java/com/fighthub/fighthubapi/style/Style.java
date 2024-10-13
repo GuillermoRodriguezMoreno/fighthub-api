@@ -1,21 +1,21 @@
 package com.fighthub.fighthubapi.style;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.fight.Fight;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

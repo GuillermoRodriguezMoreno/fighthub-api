@@ -1,13 +1,10 @@
 package com.fighthub.fighthubapi.fighter_profile;
 
+import com.fighthub.fighthubapi.category.Category;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.style.Style;
 import com.fighthub.fighthubapi.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -29,8 +26,12 @@ public class FighterProfile extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToMany
-    @JoinColumn(name = "style_id")
     private Set<Style> styles;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }

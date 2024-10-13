@@ -3,9 +3,7 @@ package com.fighthub.fighthubapi.club;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.event.Event;
 import com.fighthub.fighthubapi.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +26,10 @@ public class Club extends BaseEntity {
     private String description;
     private String phone;
 
-    @OneToOne
-    private User coach;
-    @OneToMany(mappedBy = "club")
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+    @OneToMany(mappedBy = "organizer")
     private Set<Event> eventsOrganized;
     @OneToMany(mappedBy = "club")
     private Set<User> members;

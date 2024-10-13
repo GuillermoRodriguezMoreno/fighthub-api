@@ -1,13 +1,9 @@
 package com.fighthub.fighthubapi.event;
 
+import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.fight.Fight;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +27,11 @@ public class Event extends BaseEntity {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    @ManyToOne()
+    @JoinColumn(name = "organizer_id", nullable = false)
+    private Club organizer;
+
     @OneToMany(mappedBy = "event")
     private Set<Fight> fights;
+
 }
