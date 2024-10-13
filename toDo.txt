@@ -1,2 +1,3 @@
 - Change email template
-- check that activation url in email works
+- Check that activation url in email works
+- Define exceptions

@@ -4,21 +4,24 @@ import com.fighthub.fighthubapi.email.EmailService;
 import com.fighthub.fighthubapi.email.EmailTemplateName;
 import com.fighthub.fighthubapi.role.Role;
 import com.fighthub.fighthubapi.role.RoleRepository;
+import com.fighthub.fighthubapi.security.JwtService;
 import com.fighthub.fighthubapi.user.Token;
 import com.fighthub.fighthubapi.user.TokenRepository;
 import com.fighthub.fighthubapi.user.User;
 import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +32,8 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Value("${application.email.activation-url}")
     private String activationUrl;
@@ -85,5 +90,35 @@ public class AuthenticationService {
             codeBuilder.append(chars.charAt(randomIndex));
         }
         return codeBuilder.toString();
+    }
+
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        Map<String, Object> claims = new HashMap<>();
+        User user = (User) auth.getPrincipal();
+        claims.put("fullname", user.getFullName());
+        String jwtToken = jwtService.generateToken(claims, user);
+        return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    //@Transactional
+    public void activateAccount(String token) throws MessagingException {
+        Token savedToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalStateException("Token not found"));
+        if(LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
+            sendValidationEmail(savedToken.getUser());
+            throw new IllegalStateException("Token expired. A new token has been sent to your email");
+        }
+        User user = userRepository.findById(savedToken.getUser().getId())
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+        user.setAccountEnabled(true);
+        userRepository.save(user);
+        savedToken.setValidatedAt(LocalDateTime.now());
+        tokenRepository.save(savedToken);
     }
 }
