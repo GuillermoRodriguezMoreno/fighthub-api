@@ -1,5 +1,6 @@
 package com.fighthub.fighthubapi.user;
 
+import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +41,10 @@ public class User implements UserDetails, Principal {
     private String password;
     private boolean isAccountLocked;
     private boolean isAccountEnabled;
+
+    @ManyToOne()
+    @JoinColumn(name = "club_id")
+    private Club club;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;

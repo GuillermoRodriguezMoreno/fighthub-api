@@ -1,3 +1,7 @@
 - Change email template
-- Check that activation url in email works
-- Define exceptions
+- Design database diagram
+- Implement relationship between entities
+- Gender enum
+- Address model
+- Add validation to entities
+- Think how to implement photos and add it to entities
