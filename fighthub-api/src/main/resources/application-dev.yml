@@ -28,3 +28,12 @@ spring:
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
+
+application:
+  security:
+    jwt:
+      secret-key: DEA9764EC5ACE7D2C4315AD4B37B1
+      expiration: 8640000
+  email:
+    from: "email@example.com"
+    activation-url: "http://localhost:8080/api/v1/auth/activate-account"

@@ -1,0 +1,2 @@
+- Change email template
+- check that activation url in email works
