@@ -26,7 +26,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults())
+                .cors(withDefaults()) // Cross-Origin Config Sharing
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
@@ -42,6 +42,7 @@ public class SecurityConfig {
                                         "/swagger-ui.html"
                                 )
                                 .permitAll()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(STATELESS)
