@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -30,8 +31,6 @@ public class Event extends BaseEntity {
     @ManyToOne()
     @JoinColumn(name = "organizer_id", nullable = false)
     private Club organizer;
-
     @OneToMany(mappedBy = "event")
-    private Set<Fight> fights;
-
+    private Set<Fight> fights = new HashSet<>();
 }

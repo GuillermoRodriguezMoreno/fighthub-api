@@ -6,3 +6,4 @@
 - Add validation to entities
 - Think how to implement photos and add it to entities
 - Change cross origin value in config bean
+- change open api config with the real values

@@ -29,14 +29,11 @@ public class FighterProfile extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToMany
-    private Set<Style> styles;
-
+    private Set<Style> styles = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
     @ManyToOne()
     @JoinColumn(name = "club_id")
     private Club club;
@@ -46,5 +43,4 @@ public class FighterProfile extends BaseEntity {
     private Set<Fight> blueCornerFights = new HashSet<>();
     @OneToMany(mappedBy = "redCornerFighter", cascade = CascadeType.MERGE)
     private Set<Fight> redCornerFights = new HashSet<>();
-
 }

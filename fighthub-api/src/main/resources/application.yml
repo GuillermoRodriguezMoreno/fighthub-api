@@ -7,6 +7,8 @@ spring:
 
 springdoc:
   default-produces-media-type: application/json
+  swagger-ui:
+    path: /api/v1/swagger-ui.html
 
 server:
   servlet:

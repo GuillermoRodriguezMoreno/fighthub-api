@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -31,7 +32,7 @@ public class Club extends BaseEntity {
     @JoinColumn(name = "owner_id", nullable = false)
     private FighterProfile owner;
     @OneToMany(mappedBy = "organizer")
-    private Set<Event> eventsOrganized;
+    private Set<Event> eventsOrganized = new HashSet<>();
     @OneToMany(mappedBy = "club")
-    private Set<FighterProfile> members;
+    private Set<FighterProfile> members = new HashSet<>();
 }

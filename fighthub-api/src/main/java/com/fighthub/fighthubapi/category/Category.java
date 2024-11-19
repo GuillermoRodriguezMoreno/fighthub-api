@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -24,7 +25,7 @@ public class Category extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private Set<FighterProfile> fighterProfiles;
+    private Set<FighterProfile> fighterProfiles = new HashSet<>();
     @OneToMany(mappedBy = "category")
-    private Set<Fight> fights;
+    private Set<Fight> fights = new HashSet<>();
 }

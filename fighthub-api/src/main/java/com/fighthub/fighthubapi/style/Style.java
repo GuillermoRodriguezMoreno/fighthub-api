@@ -25,7 +25,6 @@ public class Style extends BaseEntity {
 
         @ManyToMany(mappedBy = "styles")
         private Set<FighterProfile> fighters = new HashSet<>();
-
         @OneToMany(mappedBy = "style")
         private Set<Fight> fights = new HashSet<>();
 }
