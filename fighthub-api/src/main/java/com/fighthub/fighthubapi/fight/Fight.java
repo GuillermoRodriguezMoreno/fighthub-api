@@ -3,6 +3,7 @@ package com.fighthub.fighthubapi.fight;
 import com.fighthub.fighthubapi.category.Category;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.event.Event;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.style.Style;
 import com.fighthub.fighthubapi.user.User;
 import jakarta.persistence.*;
@@ -26,10 +27,10 @@ public class Fight extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "blue_corner_fighter_id")
-    private User blueCornerFighter;
+    private FighterProfile blueCornerFighter;
     @ManyToOne
     @JoinColumn(name = "red_corner_fighter_id")
-    private User redCornerFighter;
+    private FighterProfile redCornerFighter;
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;

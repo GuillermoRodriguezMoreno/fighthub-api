@@ -56,15 +56,7 @@ public class User implements UserDetails, Principal {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    @ManyToOne()
-    @JoinColumn(name = "club_id")
-    private Club club;
-    @OneToMany(mappedBy = "owner")
-    private Set<Club> clubsOwned = new HashSet<>();
-    @OneToMany(mappedBy = "blueCornerFighter", cascade = CascadeType.MERGE)
-    private Set<Fight> blueCornerFights = new HashSet<>();
-    @OneToMany(mappedBy = "redCornerFighter", cascade = CascadeType.MERGE)
-    private Set<Fight> redCornerFights = new HashSet<>();
+
 
     @Override
     public String getName() {

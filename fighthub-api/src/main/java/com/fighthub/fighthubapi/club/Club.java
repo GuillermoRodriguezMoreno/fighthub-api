@@ -2,6 +2,7 @@ package com.fighthub.fighthubapi.club;
 
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.event.Event;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,9 +29,9 @@ public class Club extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    private FighterProfile owner;
     @OneToMany(mappedBy = "organizer")
     private Set<Event> eventsOrganized;
     @OneToMany(mappedBy = "club")
-    private Set<User> members;
+    private Set<FighterProfile> members;
 }
