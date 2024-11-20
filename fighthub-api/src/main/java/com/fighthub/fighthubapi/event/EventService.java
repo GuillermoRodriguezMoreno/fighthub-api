@@ -1,5 +1,7 @@
 package com.fighthub.fighthubapi.event;
 
+import com.fighthub.fighthubapi.club.Club;
+import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final ClubRepository clubRepository;
     private final EventMapper eventMapper;
 
     public Long saveEvent(EventRequest request) {
@@ -47,12 +50,14 @@ public class EventService {
     public EventResponse updateEvent(Long eventId, EventRequest request) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + eventId));
+        Club organizer = clubRepository.findById(request.organizer().getId())
+                .orElseThrow(() -> new EntityNotFoundException("club not found with id: " + request.organizer().getId()));
         event.setName(request.name());
         event.setDescription(request.description());
         event.setAddress(request.address());
         event.setStartDate(request.startDate());
         event.setEndDate(request.endDate());
-        event.setOrganizer(request.organizer());
+        event.setOrganizer(organizer);
 
         return eventMapper.toEventResponse(eventRepository.save(event));
     }

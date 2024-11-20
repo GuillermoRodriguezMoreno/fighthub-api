@@ -17,7 +17,8 @@ public class ClubResponse {
     private String email;
     private String description;
     private String phone;
-    private FighterProfile owner;
-    private Set<Long> eventsOrganized;
-    private Set<Long> members;
+    private Long ownerId;
+    private String ownerName;
+    private String ownerUsername;
+    private String ownerEmail;
 }

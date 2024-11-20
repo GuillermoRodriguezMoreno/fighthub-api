@@ -1,5 +1,6 @@
 package com.fighthub.fighthubapi.club;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.event.Event;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
@@ -32,7 +33,9 @@ public class Club extends BaseEntity {
     @JoinColumn(name = "owner_id", nullable = false)
     private FighterProfile owner;
     @OneToMany(mappedBy = "organizer")
+    @JsonIgnore
     private Set<Event> eventsOrganized = new HashSet<>();
     @OneToMany(mappedBy = "club")
+    @JsonIgnore
     private Set<FighterProfile> members = new HashSet<>();
 }

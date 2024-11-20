@@ -29,19 +29,10 @@ public class ClubMapper {
                 .email(club.getEmail())
                 .description(club.getDescription())
                 .phone(club.getPhone())
-                .owner(club.getOwner())
-                .eventsOrganized(
-                        club.getEventsOrganized()
-                                .stream()
-                                .map(Event::getId)
-                                .collect(Collectors.toSet())
-                )
-                .members(
-                        club.getMembers()
-                                .stream()
-                                .map(FighterProfile::getId)
-                                .collect(Collectors.toSet())
-                )
+                .ownerId(club.getOwner().getId())
+                .ownerName(club.getOwner().getUser().getFullName())
+                .ownerUsername(club.getOwner().getUser().getUsername())
+                .ownerEmail(club.getOwner().getUser().getEmail())
                 .build();
     }
 }

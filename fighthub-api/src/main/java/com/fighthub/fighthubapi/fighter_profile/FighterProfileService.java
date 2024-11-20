@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,11 +51,11 @@ public class FighterProfileService {
         fighterProfile.setWeight(request.weight());
         fighterProfile.setHeight(request.height());
         fighterProfile.setGender(request.gender());
-        fighterProfile.setBiography(request.biography());
+        Optional.ofNullable(request.biography()).ifPresent(fighterProfile::setBiography);
         fighterProfile.setUser(request.user());
         fighterProfile.setStyles(request.styles());
         fighterProfile.setCategory(request.category());
-        fighterProfile.setClub(request.club());
+        Optional.ofNullable(request.club()).ifPresent(fighterProfile::setClub);
 
         return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));
     }

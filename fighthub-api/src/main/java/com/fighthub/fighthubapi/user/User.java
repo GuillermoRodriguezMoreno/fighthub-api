@@ -54,7 +54,7 @@ public class User implements UserDetails, Principal {
     private LocalDateTime updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
 
 
@@ -78,6 +78,10 @@ public class User implements UserDetails, Principal {
 
     @Override
     public String getUsername() {
+        return email;
+    }
+
+    public String getNickname() {
         return username;
     }
 

@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,6 +23,6 @@ public class UserResponse {
     private String email;
     private boolean isAccountLocked;
     private boolean isAccountEnabled;
-    private List<Role> roles;
+    private Set<Role> roles;
     private String fullName;
 }

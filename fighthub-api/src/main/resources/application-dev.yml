@@ -32,8 +32,8 @@ spring:
 application:
   security:
     jwt:
-      secret-key: jQLJ9c6T2H7RlwJjt5WOvHAyGTeZEPkC
+      secret-key: LmtC4QHX8ZP3Lgf8KvLXG3ZsDbYxFPXqftCvcBDV1a8=
       expiration: 8640000
   email:
-    from: "email@example.com"
+    from: "admin@fighthub.com"
     activation-url: "http://localhost:8080/api/v1/auth/activate-account"

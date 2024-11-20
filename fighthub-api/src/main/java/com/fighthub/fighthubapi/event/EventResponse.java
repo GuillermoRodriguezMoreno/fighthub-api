@@ -18,6 +18,9 @@ public class EventResponse {
     private String address;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Club organizer;
-    private Set<Long> fights;
+    private Long organizerId;
+    private String organizerName;
+    private String organizerAddress;
+    private String organizerEmail;
+    private String organizerPhone;
 }

@@ -11,18 +11,20 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 
 public record FighterProfileRequest(
-        @NotNull(message = "100")
+        @NotNull(message = "Weight is required")
         double weight,
-        @NotNull(message = "100")
+        @NotNull(message = "Height is required")
         int height,
-        @NotNull(message = "100")
-        @NotEmpty(message = "100")
-        @NotBlank(message = "100")
+        @NotNull(message = "Gender is required")
+        @NotEmpty(message = "Gender is required")
+        @NotBlank(message = "Gender is required")
         String gender,
         String biography,
         @NotNull(message = "100")
         User user,
+        @NotNull(message = "Style are required")
         Set<Style> styles,
+        @NotNull(message = "Category are required")
         Category category,
         Club club
 ) {}

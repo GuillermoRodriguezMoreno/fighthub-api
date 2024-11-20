@@ -1,5 +1,6 @@
 package com.fighthub.fighthubapi.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.fight.Fight;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
@@ -25,7 +26,9 @@ public class Category extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private Set<FighterProfile> fighterProfiles = new HashSet<>();
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private Set<Fight> fights = new HashSet<>();
 }

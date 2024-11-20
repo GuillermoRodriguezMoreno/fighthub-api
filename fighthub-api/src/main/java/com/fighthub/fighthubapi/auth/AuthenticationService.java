@@ -50,7 +50,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .isAccountEnabled(false)
                 .isAccountLocked(false)
-                .roles(List.of(userRole))
+                .roles(Set.of(userRole))
                 .build();
 
         userRepository.save(user);

@@ -27,13 +27,11 @@ public class EventMapper {
                 .address(event.getAddress())
                 .startDate(event.getStartDate())
                 .endDate(event.getEndDate())
-                .organizer(event.getOrganizer())
-                .fights(
-                        event.getFights()
-                                .stream()
-                                .map(Fight::getId)
-                                .collect(Collectors.toSet())
-                )
+                .organizerId(event.getOrganizer().getId())
+                .organizerName(event.getOrganizer().getName())
+                .organizerAddress(event.getOrganizer().getAddress())
+                .organizerEmail(event.getOrganizer().getEmail())
+                .organizerPhone(event.getOrganizer().getPhone())
                 .build();
     }
 }

@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotNull;
 
 public record CategoryRequest(
         Long id,
-        @NotNull(message = "100")
-        @NotEmpty(message = "100")
-        @NotBlank(message = "100")
+        @NotNull(message = "Name is required")
+        @NotEmpty(message = "Name is required")
+        @NotBlank(message = "Name is required")
         String name
 ) {
 }

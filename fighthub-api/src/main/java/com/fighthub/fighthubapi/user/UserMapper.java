@@ -25,7 +25,7 @@ public class UserMapper {
                 .id(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
-                .username(user.getUsername())
+                .username(user.getNickname())
                 .dateOfBirth(user.getDateOfBirth())
                 .email(user.getEmail())
                 .isAccountLocked(user.isAccountLocked())
