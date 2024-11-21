@@ -1,14 +1,10 @@
 package com.fighthub.fighthubapi.style;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.fight.Fight;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

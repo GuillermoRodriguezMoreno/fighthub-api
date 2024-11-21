@@ -4,7 +4,8 @@ import com.fighthub.fighthubapi.category.CategoryResponse;
 import com.fighthub.fighthubapi.club.ClubResponse;
 import com.fighthub.fighthubapi.style.StyleResponse;
 import org.springframework.stereotype.Service;
-import com.fighthub.fighthubapi.fight.Fight;
+import com.fighthub.fighthubapi.user.User;
+import java.util.Optional;
 
 import java.util.stream.Collectors;
 
@@ -31,11 +32,31 @@ public class FighterProfileMapper {
                 .height(profile.getHeight())
                 .gender(profile.getGender())
                 .biography(profile.getBiography())
-                .userId(profile.getUser().getId())
-                .name(profile.getUser().getFullName())
-                .username(profile.getUser().getNickname())
-                .email(profile.getUser().getEmail())
-                .dateOfBirth(profile.getUser().getDateOfBirth())
+                .userId(
+                        Optional.ofNullable(profile.getUser())
+                                .map(User::getId)
+                                .orElse(null)
+                )
+                .name(
+                        Optional.ofNullable(profile.getUser())
+                                .map(User::getFullName)
+                                .orElse(null)
+                )
+                .username(
+                        Optional.ofNullable(profile.getUser())
+                                .map(User::getNickname)
+                                .orElse(null)
+                )
+                .email(
+                        Optional.ofNullable(profile.getUser())
+                                .map(User::getEmail)
+                                .orElse(null)
+                )
+                .dateOfBirth(
+                        Optional.ofNullable(profile.getUser())
+                                .map(User::getDateOfBirth)
+                                .orElse(null)
+                )
                 .styles(profile.getStyles().stream().map(style -> StyleResponse.builder()
                         .id(style.getId())
                         .name(style.getName())

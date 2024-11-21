@@ -2,6 +2,11 @@ package com.fighthub.fighthubapi.fight;
 
 import org.springframework.stereotype.Service;
 import com.fighthub.fighthubapi.club.Club;
+import com.fighthub.fighthubapi.category.Category;
+import com.fighthub.fighthubapi.event.Event;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
+import com.fighthub.fighthubapi.style.Style;
+import com.fighthub.fighthubapi.user.User;
 import java.util.Optional;
 
 @Service
@@ -32,23 +37,54 @@ public class FightMapper {
                 .weight(fight.getWeight())
                 .rounds(fight.getRounds())
                 .minutesPerRound(fight.getMinutesPerRound())
-                .blueCornerFighterId(fight.getBlueCornerFighter().getId())
-                .blueCornerFighterName(fight.getBlueCornerFighter().getUser().getFullName())
+                .blueCornerFighterId(
+                        Optional.ofNullable(fight.getBlueCornerFighter())
+                                .map(FighterProfile::getId)
+                                .orElse(null)
+                )
+                .blueCornerFighterName(
+                        Optional.ofNullable(fight.getBlueCornerFighter())
+                                .map(FighterProfile::getUser)
+                                .map(User::getFullName)
+                                .orElse(null)
+                )
+
                 .blueCornerFighterClub(
                         Optional.ofNullable(fight.getBlueCornerFighter().getClub())
                                 .map(Club::getName)
-                                .orElse("No club")
+                                .orElse(null)
                 )                .redCornerFighterId(fight.getRedCornerFighter().getId())
-                .redCornerFighterName(fight.getRedCornerFighter().getUser().getFullName())
+                .redCornerFighterName(
+                        Optional.ofNullable(fight.getRedCornerFighter())
+                                .map(FighterProfile::getUser)
+                                .map(User::getFullName)
+                                .orElse(null)
+                )
                 .redCornerFighterClub(
                         Optional.ofNullable(fight.getRedCornerFighter().getClub())
                                 .map(Club::getName)
-                                .orElse("No club")
+                                .orElse(null)
                 )
-                .eventId(fight.getEvent().getId())
-                .eventName(fight.getEvent().getName())
-                .category(fight.getCategory().getName())
-                .style(fight.getStyle().getName())
+                .eventId(
+                        Optional.ofNullable(fight.getEvent())
+                                .map(Event::getId)
+                                .orElse(null)
+                )
+                .eventName(
+                        Optional.ofNullable(fight.getEvent())
+                                .map(Event::getName)
+                                .orElse(null)
+                )
+                .category(
+                        Optional.ofNullable(fight.getCategory())
+                                .map(Category::getName)
+                                .orElse(null)
+                )
+                .style(
+                        Optional.ofNullable(fight.getStyle())
+                                .map(Style::getName)
+                                .orElse(null)
+                )
                 .build();
     }
 }

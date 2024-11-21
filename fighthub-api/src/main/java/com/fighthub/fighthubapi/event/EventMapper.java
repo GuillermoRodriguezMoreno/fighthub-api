@@ -1,9 +1,9 @@
 package com.fighthub.fighthubapi.event;
 
-import com.fighthub.fighthubapi.fight.Fight;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
 
+import java.util.Optional;
+import com.fighthub.fighthubapi.club.Club;
 @Service
 public class EventMapper {
 
@@ -27,11 +27,31 @@ public class EventMapper {
                 .address(event.getAddress())
                 .startDate(event.getStartDate())
                 .endDate(event.getEndDate())
-                .organizerId(event.getOrganizer().getId())
-                .organizerName(event.getOrganizer().getName())
-                .organizerAddress(event.getOrganizer().getAddress())
-                .organizerEmail(event.getOrganizer().getEmail())
-                .organizerPhone(event.getOrganizer().getPhone())
+                .organizerId(
+                        Optional.ofNullable(event.getOrganizer())
+                                .map(Club::getId)
+                                .orElse(null)
+                )
+                .organizerName(
+                        Optional.ofNullable(event.getOrganizer())
+                                .map(Club::getName)
+                                .orElse(null)
+                )
+                .organizerAddress(
+                        Optional.ofNullable(event.getOrganizer())
+                                .map(Club::getAddress)
+                                .orElse(null)
+                )
+                .organizerEmail(
+                        Optional.ofNullable(event.getOrganizer())
+                                .map(Club::getEmail)
+                                .orElse(null)
+                )
+                .organizerPhone(
+                        Optional.ofNullable(event.getOrganizer())
+                                .map(Club::getPhone)
+                                .orElse(null)
+                )
                 .build();
     }
 }

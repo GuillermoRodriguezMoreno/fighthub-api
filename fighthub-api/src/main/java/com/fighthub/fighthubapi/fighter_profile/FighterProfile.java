@@ -31,6 +31,11 @@ public class FighterProfile extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToMany
+    @JoinTable(
+            name = "fighter_profile_styles",
+            joinColumns = @JoinColumn(name = "fighters_id"),
+            inverseJoinColumns = @JoinColumn(name = "styles_id")
+    )
     private Set<Style> styles = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "category_id")

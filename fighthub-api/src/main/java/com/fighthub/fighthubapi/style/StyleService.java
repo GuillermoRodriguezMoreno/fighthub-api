@@ -3,6 +3,7 @@ package com.fighthub.fighthubapi.style;
 import com.fighthub.fighthubapi.style.*;
 import com.fighthub.fighthubapi.common.PageResponse;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,7 +51,9 @@ public class StyleService {
         style.setName(request.name());
         return styleMapper.toStyleResponse(styleRepository.save(style));
     }
+    @Transactional
     public void deleteStyle(Long styleId) {
+        styleRepository.deleteStyleAssociations(styleId);
         styleRepository.deleteById(styleId);
     }
 }

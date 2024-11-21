@@ -1,10 +1,10 @@
 package com.fighthub.fighthubapi.club;
 
-import com.fighthub.fighthubapi.common.BaseEntity;
-import com.fighthub.fighthubapi.event.Event;
+import com.fighthub.fighthubapi.user.User;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
+
+import java.util.Optional;
 
 @Service
 public class ClubMapper {
@@ -29,10 +29,30 @@ public class ClubMapper {
                 .email(club.getEmail())
                 .description(club.getDescription())
                 .phone(club.getPhone())
-                .ownerId(club.getOwner().getId())
-                .ownerName(club.getOwner().getUser().getFullName())
-                .ownerUsername(club.getOwner().getUser().getUsername())
-                .ownerEmail(club.getOwner().getUser().getEmail())
+                .ownerId(
+                        Optional.ofNullable(club.getOwner())
+                                .map(FighterProfile::getId)
+                                .orElse(null)
+                )
+                .ownerName(
+                        Optional.ofNullable(club.getOwner())
+                                .map(FighterProfile::getUser)
+                                .map(User::getFullName)
+                                .orElse(null)
+                )
+                .ownerUsername(
+                        Optional.ofNullable(club.getOwner())
+                                .map(FighterProfile::getUser)
+                                .map(User::getUsername)
+                                .orElse(null)
+                )
+                .ownerEmail(
+                        Optional.ofNullable(club.getOwner())
+                                .map(FighterProfile::getUser)
+                                .map(User::getEmail)
+                                .orElse(null)
+                )
+
                 .build();
     }
 }
