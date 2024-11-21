@@ -15,9 +15,11 @@ public record FightRequest(
         double weight,
         int rounds,
         int minutesPerRound,
+        @NotNull(message = "Blue corner fighter is required")
         FighterProfile blueCornerFighter,
+        @NotNull(message = "Red corner fighter is required")
         FighterProfile redCornerFighter,
-        @NotNull(message = "100")
+        @NotNull(message = "Event is required")
         Event event,
         Category category,
         Style style

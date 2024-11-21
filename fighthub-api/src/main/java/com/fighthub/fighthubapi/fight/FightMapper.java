@@ -1,6 +1,8 @@
 package com.fighthub.fighthubapi.fight;
 
 import org.springframework.stereotype.Service;
+import com.fighthub.fighthubapi.club.Club;
+import java.util.Optional;
 
 @Service
 public class FightMapper {
@@ -30,11 +32,23 @@ public class FightMapper {
                 .weight(fight.getWeight())
                 .rounds(fight.getRounds())
                 .minutesPerRound(fight.getMinutesPerRound())
-                .blueCornerFighter(fight.getBlueCornerFighter())
-                .redCornerFighter(fight.getRedCornerFighter())
-                .event(fight.getEvent())
-                .category(fight.getCategory())
-                .style(fight.getStyle())
+                .blueCornerFighterId(fight.getBlueCornerFighter().getId())
+                .blueCornerFighterName(fight.getBlueCornerFighter().getUser().getFullName())
+                .blueCornerFighterClub(
+                        Optional.ofNullable(fight.getBlueCornerFighter().getClub())
+                                .map(Club::getName)
+                                .orElse("No club")
+                )                .redCornerFighterId(fight.getRedCornerFighter().getId())
+                .redCornerFighterName(fight.getRedCornerFighter().getUser().getFullName())
+                .redCornerFighterClub(
+                        Optional.ofNullable(fight.getRedCornerFighter().getClub())
+                                .map(Club::getName)
+                                .orElse("No club")
+                )
+                .eventId(fight.getEvent().getId())
+                .eventName(fight.getEvent().getName())
+                .category(fight.getCategory().getName())
+                .style(fight.getStyle().getName())
                 .build();
     }
 }
