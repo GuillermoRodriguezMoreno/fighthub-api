@@ -22,7 +22,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Category extends BaseEntity {
-
     private String name;
 
     @OneToMany(mappedBy = "category")

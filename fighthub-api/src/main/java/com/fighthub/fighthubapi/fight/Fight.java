@@ -17,14 +17,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Entity
 public class Fight extends BaseEntity {
-
     private int fightOrder;
     private boolean isTitleFight;
     private boolean isClosed;
+    private boolean isKo;
     private double weight;
     private int rounds;
     private int minutesPerRound;
 
+    @OneToOne
+    private FighterProfile winner;
     @ManyToOne
     @JoinColumn(name = "blue_corner_fighter_id")
     private FighterProfile blueCornerFighter;

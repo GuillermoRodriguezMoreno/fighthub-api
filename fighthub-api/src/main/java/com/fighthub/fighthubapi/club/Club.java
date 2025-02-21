@@ -22,7 +22,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Club extends BaseEntity {
-
     private String name;
     private String address;
     private String email;

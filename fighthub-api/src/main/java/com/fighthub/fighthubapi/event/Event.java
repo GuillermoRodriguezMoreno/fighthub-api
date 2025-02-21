@@ -22,7 +22,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Event extends BaseEntity {
-
     private String name;
     private String description;
     private String address;

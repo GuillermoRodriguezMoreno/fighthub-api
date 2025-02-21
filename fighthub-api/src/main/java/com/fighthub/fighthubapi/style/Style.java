@@ -18,7 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Style extends BaseEntity {
-
         private String name;
 
         @ManyToMany(mappedBy = "styles")

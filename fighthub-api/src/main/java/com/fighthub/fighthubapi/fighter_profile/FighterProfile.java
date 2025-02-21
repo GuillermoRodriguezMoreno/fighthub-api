@@ -21,7 +21,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class FighterProfile extends BaseEntity {
-
     private double weight;
     private int height;
     private String gender;

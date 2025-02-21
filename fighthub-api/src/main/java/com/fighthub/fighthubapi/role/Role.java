@@ -20,21 +20,19 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Role {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(unique = true)
     private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private List<User> users;
-
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
+    private List<User> users;
 }
