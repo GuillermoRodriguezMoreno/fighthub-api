@@ -23,6 +23,6 @@ public class UserResponse {
     private String email;
     private boolean isAccountLocked;
     private boolean isAccountEnabled;
-    private Set<Role> roles;
+    private Set<String> roles;
     private String fullName;
 }

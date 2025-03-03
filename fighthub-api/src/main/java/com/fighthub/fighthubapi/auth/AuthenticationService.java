@@ -103,7 +103,12 @@ public class AuthenticationService {
         User user = (User) auth.getPrincipal();
         claims.put("fullname", user.getFullName());
         String jwtToken = jwtService.generateToken(claims, user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse
+                .builder()
+                .token(jwtToken)
+                .email(user.getEmail())
+                .name(user.getNickname())
+                .build();
     }
 
     //@Transactional

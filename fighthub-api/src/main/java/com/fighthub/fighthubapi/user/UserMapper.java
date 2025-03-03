@@ -2,6 +2,9 @@ package com.fighthub.fighthubapi.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+import com.fighthub.fighthubapi.role.Role;
+
 @Service
 public class UserMapper {
 
@@ -30,7 +33,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .isAccountLocked(user.isAccountLocked())
                 .isAccountEnabled(user.isAccountEnabled())
-                .roles(user.getRoles())
+                .roles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()))
                 .fullName(user.getFullName())
                 .build();
     }
