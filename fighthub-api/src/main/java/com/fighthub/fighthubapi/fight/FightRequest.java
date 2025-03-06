@@ -15,6 +15,7 @@ public record FightRequest(
         double weight,
         int rounds,
         int minutesPerRound,
+        Long likes,
         FighterProfile blueCornerFighter,
         FighterProfile redCornerFighter,
         @NotNull(message = "Event is required")

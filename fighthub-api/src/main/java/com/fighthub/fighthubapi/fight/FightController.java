@@ -32,9 +32,10 @@ public class FightController {
     @GetMapping
     public ResponseEntity<PageResponse<FightResponse>> findAllFights(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "sortBy", defaultValue = "event", required = false) String orderBy
     ){
-        return ResponseEntity.ok(fightservice.findAllFights(page, size));
+        return ResponseEntity.ok(fightservice.findAllFights(page, size, orderBy));
     }
     @PutMapping("{fight-id}")
     public ResponseEntity<FightResponse> updateFight(
@@ -49,5 +50,23 @@ public class FightController {
     ) {
         fightservice.deleteFight(fightId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/fighter/{fighter-id}")
+    public ResponseEntity<PageResponse<FightResponse>> findFightsByFighter(
+            @PathVariable("fighter-id") Long fighterId,
+            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+    ) {
+        return ResponseEntity.ok(fightservice.findFightsByFighterId(fighterId, page, size));
+    }
+
+    @GetMapping("/event/{event-id}")
+    public ResponseEntity<PageResponse<FightResponse>> findFightsByEvent(
+            @PathVariable("event-id") Long eventId,
+            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+    ) {
+        return ResponseEntity.ok(fightservice.findFightsByEventId(eventId, page, size));
     }
 }

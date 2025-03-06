@@ -32,8 +32,12 @@ public class EventService {
                 .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + eventId));
     }
 
-    public PageResponse<EventResponse> findAllEvents(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("startDate", "name").descending());
+    public PageResponse<EventResponse> findAllEvents(Integer page, Integer size, String orderBy) {
+        Sort sort = Sort.by("startDate", "name").descending();
+        if (orderBy != null && !orderBy.isEmpty()) {
+            sort = Sort.by(orderBy).descending();
+        }
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Event> events = eventRepository.findAll(pageable);
         List<EventResponse> eventResponse = events.stream()
                 .map(eventMapper::toEventResponse)
@@ -47,6 +51,7 @@ public class EventService {
                 events.isFirst(),
                 events.isLast());
     }
+
     public EventResponse updateEvent(Long eventId, EventRequest request) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + eventId));
@@ -63,5 +68,21 @@ public class EventService {
     }
     public void deleteEvent(Long eventId) {
         eventRepository.deleteById(eventId);
+    }
+
+    public PageResponse<EventResponse> findEventsByOrganizerProfile(Long organizerId, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("startDate", "name").descending());
+        Page<Event> events = eventRepository.findAllByOrganizerProfileId(organizerId ,pageable);
+        List<EventResponse> eventResponse = events.stream()
+                .map(eventMapper::toEventResponse)
+                .toList();
+        return new PageResponse<>(
+                eventResponse,
+                events.getNumber(),
+                events.getSize(),
+                events.getTotalElements(),
+                events.getTotalPages(),
+                events.isFirst(),
+                events.isLast());
     }
 }

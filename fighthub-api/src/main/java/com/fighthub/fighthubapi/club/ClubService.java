@@ -34,8 +34,12 @@ public class ClubService {
                 .orElseThrow(() -> new EntityNotFoundException("club not found with id: " + clubId));
     }
 
-    public PageResponse<ClubResponse> findAllClubs(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("name").descending());
+    public PageResponse<ClubResponse> findAllClubs(Integer page, Integer size, String orderBy) {
+        Sort sort = Sort.by("name").descending();
+        if (orderBy != null && !orderBy.isEmpty()) {
+            sort = Sort.by(orderBy).descending();
+        }
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Club> clubs = clubRepository.findAll(pageable);
         List<ClubResponse> clubResponse = clubs.stream()
                 .map(clubMapper::toClubResponse)
@@ -65,5 +69,33 @@ public class ClubService {
     }
     public void deleteClub(Long clubId) {
         clubRepository.deleteById(clubId);
+    }
+
+    public ClubResponse findClubByOwnerId(Long ownerId) {
+        return clubRepository.findByOwnerId(ownerId)
+                .map(clubMapper::toClubResponse)
+                .orElseThrow(() -> new EntityNotFoundException("club not found with owner id: " + ownerId));
+    }
+
+    public PageResponse<ClubResponse> findClubsOrderByMembersSize(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Club> clubs = clubRepository.findAllOrderByMembersSize(pageable);
+        List<ClubResponse> clubResponse = clubs.stream()
+                .map(clubMapper::toClubResponse)
+                .toList();
+        return new PageResponse<>(
+                clubResponse,
+                clubs.getNumber(),
+                clubs.getSize(),
+                clubs.getTotalElements(),
+                clubs.getTotalPages(),
+                clubs.isFirst(),
+                clubs.isLast());
+    }
+
+    public ClubResponse findClubByFighterProfileId(Long fighterProfileId) {
+        return clubRepository.findByFighterProfileId(fighterProfileId)
+                .map(clubMapper::toClubResponse)
+                .orElseThrow(() -> new EntityNotFoundException("club not found with fighterProfile id: " + fighterProfileId));
     }
 }

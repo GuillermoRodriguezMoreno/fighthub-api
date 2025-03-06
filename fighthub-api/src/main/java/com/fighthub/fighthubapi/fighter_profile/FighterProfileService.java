@@ -62,4 +62,20 @@ public class FighterProfileService {
     public void deleteFighterProfile(Long fighterProfileId) {
         fighterProfileRepository.deleteById(fighterProfileId);
     }
+
+    public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("weight").descending());
+        Page<FighterProfile> fighterProfiles = fighterProfileRepository.findAllByClubId(clubId, pageable);
+        List<FighterProfileResponse> fighterProfileResponse = fighterProfiles.stream()
+                .map(fighterProfileMapper::toFighterProfileResponse)
+                .toList();
+        return new PageResponse<>(
+                fighterProfileResponse,
+                fighterProfiles.getNumber(),
+                fighterProfiles.getSize(),
+                fighterProfiles.getTotalElements(),
+                fighterProfiles.getTotalPages(),
+                fighterProfiles.isFirst(),
+                fighterProfiles.isLast());
+    }
 }

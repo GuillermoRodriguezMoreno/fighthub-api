@@ -6,6 +6,7 @@ import com.fighthub.fighthubapi.event.Event;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.style.Style;
 import com.fighthub.fighthubapi.user.User;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,6 +25,7 @@ public class Fight extends BaseEntity {
     private double weight;
     private int rounds;
     private int minutesPerRound;
+    private Long likes;
 
     @OneToOne
     private FighterProfile winner;

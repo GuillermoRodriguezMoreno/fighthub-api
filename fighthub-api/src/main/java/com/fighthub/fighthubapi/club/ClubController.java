@@ -35,9 +35,10 @@ public class ClubController {
     @GetMapping
     public ResponseEntity<PageResponse<ClubResponse>> findAllClubs(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "orderBy", required = false) String orderBy
     ){
-        return ResponseEntity.ok(clubService.findAllClubs(page, size));
+        return ResponseEntity.ok(clubService.findAllClubs(page, size, orderBy));
     }
     @PutMapping("{club-id}")
     public ResponseEntity<ClubResponse> updateClub(
@@ -52,5 +53,29 @@ public class ClubController {
     ) {
         clubService.deleteClub(clubId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/owner/{owner-id}")
+    public ResponseEntity<ClubResponse> findClubsByOwner(
+            @PathVariable("owner-id") Long ownerId,
+            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+    ) {
+        return ResponseEntity.ok(clubService.findClubByOwnerId(ownerId));
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<PageResponse<ClubResponse>> findPopularClubs(
+            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+    ) {
+        return ResponseEntity.ok(clubService.findClubsOrderByMembersSize(page, size));
+    }
+    
+    @GetMapping("/fighter/{fighter-id}")
+    public ResponseEntity<ClubResponse> findClubsByFighter(
+            @PathVariable("fighter-id") Long fighterId
+    ) {
+        return ResponseEntity.ok(clubService.findClubByFighterProfileId(fighterId));
     }
 }

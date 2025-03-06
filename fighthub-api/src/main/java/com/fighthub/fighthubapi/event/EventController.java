@@ -32,9 +32,10 @@ public class EventController {
     @GetMapping
     public ResponseEntity<PageResponse<EventResponse>> findAllEvents(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "orderBy", required = false) String orderBy
     ){
-        return ResponseEntity.ok(eventService.findAllEvents(page, size));
+        return ResponseEntity.ok(eventService.findAllEvents(page, size, orderBy));
     }
     @PutMapping("{event-id}")
     public ResponseEntity<EventResponse> updateEvent(
@@ -49,5 +50,14 @@ public class EventController {
     ) {
         eventService.deleteEvent(eventId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("organizer/{organizer-id}")
+    public ResponseEntity<PageResponse<EventResponse>> findEventsByOrganizer(
+            @PathVariable("organizer-id") Long organizerId,
+            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+    ) {
+        return ResponseEntity.ok(eventService.findEventsByOrganizerProfile(organizerId, page, size));
     }
 }

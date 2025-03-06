@@ -20,6 +20,7 @@ public class FightMapper {
                 .weight(request.weight())
                 .rounds(request.rounds())
                 .minutesPerRound(request.minutesPerRound())
+                .likes(request.likes())
                 .blueCornerFighter(request.blueCornerFighter())
                 .redCornerFighter(request.redCornerFighter())
                 .event(request.event())
@@ -37,6 +38,7 @@ public class FightMapper {
                 .weight(fight.getWeight())
                 .rounds(fight.getRounds())
                 .minutesPerRound(fight.getMinutesPerRound())
+                .likes(fight.getLikes())
                 .blueCornerFighterId(
                         Optional.ofNullable(fight.getBlueCornerFighter())
                                 .map(FighterProfile::getId)
@@ -50,10 +52,11 @@ public class FightMapper {
                 )
 
                 .blueCornerFighterClub(
-                        Optional.ofNullable(fight.getBlueCornerFighter().getClub())
+                        Optional.ofNullable(fight.getBlueCornerFighter())
+                                .map(FighterProfile::getClub)
                                 .map(Club::getName)
                                 .orElse(null)
-                )                .redCornerFighterId(fight.getRedCornerFighter().getId())
+                )
                 .redCornerFighterName(
                         Optional.ofNullable(fight.getRedCornerFighter())
                                 .map(FighterProfile::getUser)
@@ -61,7 +64,8 @@ public class FightMapper {
                                 .orElse(null)
                 )
                 .redCornerFighterClub(
-                        Optional.ofNullable(fight.getRedCornerFighter().getClub())
+                        Optional.ofNullable(fight.getRedCornerFighter())
+                                .map(FighterProfile::getClub)
                                 .map(Club::getName)
                                 .orElse(null)
                 )

@@ -22,6 +22,7 @@ public class FightResponse {
     private double weight;
     private int rounds;
     private int minutesPerRound;
+    private Long likes;
     private Long blueCornerFighterId;
     private String blueCornerFighterName;
     private String blueCornerFighterClub;
