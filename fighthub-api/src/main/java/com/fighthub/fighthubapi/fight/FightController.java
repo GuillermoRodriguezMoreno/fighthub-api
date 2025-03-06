@@ -33,7 +33,7 @@ public class FightController {
     public ResponseEntity<PageResponse<FightResponse>> findAllFights(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
-            @RequestParam(name = "sortBy", defaultValue = "event", required = false) String orderBy
+            @RequestParam(name = "orderBy", defaultValue = "weight", required = false) String orderBy
     ){
         return ResponseEntity.ok(fightservice.findAllFights(page, size, orderBy));
     }
@@ -68,6 +68,14 @@ public class FightController {
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
     ) {
         return ResponseEntity.ok(fightservice.findFightsByEventId(eventId, page, size));
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<PageResponse<FightResponse>> findPopularFights(
+            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+    ) {
+        return ResponseEntity.ok(fightservice.findFightsPopular(page, size));
     }
 
     @PostMapping("{fight_id}/like")

@@ -16,14 +16,14 @@ import lombok.*;
 @Builder
 public class FightResponse {
     private Long id;
-    private int fightOrder;
+    private Integer fightOrder;
     private boolean isTitleFight;
     private boolean isClosed;
     private boolean isKo;
     private boolean isDraw;
     private double weight;
-    private int rounds;
-    private int minutesPerRound;
+    private Integer rounds;
+    private Integer minutesPerRound;
     private Long likes;
     private Long winnerId;
     private String winnerName;

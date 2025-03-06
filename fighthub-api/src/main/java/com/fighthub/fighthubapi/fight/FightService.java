@@ -37,10 +37,7 @@ public class FightService {
     }
 
     public PageResponse<FightResponse> findAllFights(Integer page, Integer size, String orderBy) {
-        Sort sort = Sort.by("startDate", "name").descending();
-        if (orderBy != null && !orderBy.isEmpty()) {
-            sort = Sort.by(orderBy).descending();
-        }
+        Sort sort = Sort.by(orderBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Fight> fights = fightRepository.findAll(pageable);
         List<FightResponse> fightResponse = fights.stream()
@@ -96,7 +93,7 @@ public class FightService {
     }
 
     public PageResponse<FightResponse> findFightsByFighterId(Long fighterId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("event").descending());
+        Pageable pageable = PageRequest.of(page, size);
         Page<Fight> fights = fightRepository.findAllByBlueCornerFighterIdOrRedCornerFighterId(fighterId, pageable);
         List<FightResponse> fightResponse = fights.stream()
                 .map(fightMapper::toFightResponse)
@@ -114,6 +111,22 @@ public class FightService {
     public PageResponse<FightResponse> findFightsByEventId(Long eventId, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("fightOrder").descending());
         Page<Fight> fights = fightRepository.findAllByEventId(eventId, pageable);
+        List<FightResponse> fightResponse = fights.stream()
+                .map(fightMapper::toFightResponse)
+                .toList();
+        return new PageResponse<>(
+                fightResponse,
+                fights.getNumber(),
+                fights.getSize(),
+                fights.getTotalElements(),
+                fights.getTotalPages(),
+                fights.isFirst(),
+                fights.isLast());
+    }
+
+    public PageResponse<FightResponse> findFightsPopular(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Fight> fights = fightRepository.findAllPopularFights(pageable);
         List<FightResponse> fightResponse = fights.stream()
                 .map(fightMapper::toFightResponse)
                 .toList();

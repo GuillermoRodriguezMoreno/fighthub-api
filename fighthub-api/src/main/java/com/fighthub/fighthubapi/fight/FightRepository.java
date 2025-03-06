@@ -12,4 +12,9 @@ public interface FightRepository extends JpaRepository<Fight, Long> {
     Page<Fight> findAllByBlueCornerFighterIdOrRedCornerFighterId(Long fighterId, Pageable pageable);
 
     Page<Fight> findAllByEventId(Long eventId, Pageable pageable);
+
+    @Query("SELECT f FROM Fight f ORDER BY CASE WHEN f.likes IS NULL THEN 1 ELSE 0 END, f.likes DESC")
+    Page<Fight> findAllPopularFights(Pageable pageable);
+
+
 }

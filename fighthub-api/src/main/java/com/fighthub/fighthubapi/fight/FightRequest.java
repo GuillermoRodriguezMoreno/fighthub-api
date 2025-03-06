@@ -7,16 +7,15 @@ import com.fighthub.fighthubapi.style.Style;
 import jakarta.validation.constraints.NotNull;
 
 public record FightRequest(
-        long id,
-        @NotNull(message = "100")
-        int fightOrder,
+        Long id,
+        Integer fightOrder,
         boolean isTitleFight,
         boolean isClosed,
         boolean isKo,
         boolean isDraw,
         double weight,
-        int rounds,
-        int minutesPerRound,
+        Integer rounds,
+        Integer minutesPerRound,
         Long likes,
         FighterProfile blueCornerFighter,
         FighterProfile redCornerFighter,

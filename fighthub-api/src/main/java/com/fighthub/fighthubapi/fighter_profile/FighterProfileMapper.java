@@ -3,10 +3,11 @@ package com.fighthub.fighthubapi.fighter_profile;
 import com.fighthub.fighthubapi.category.CategoryResponse;
 import com.fighthub.fighthubapi.club.ClubResponse;
 import com.fighthub.fighthubapi.style.StyleResponse;
-import org.springframework.stereotype.Service;
 import com.fighthub.fighthubapi.user.User;
-import java.util.Optional;
+import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,18 +65,25 @@ public class FighterProfileMapper {
                                 .map(User::getEmail)
                                 .orElse(null)
                 )
-                .styles(profile.getStyles().stream().map(style -> StyleResponse.builder()
-                        .id(style.getId())
-                        .name(style.getName())
-                        .build()).collect(Collectors.toSet()))
-                .category(CategoryResponse.builder()
-                        .id(profile.getCategory().getId())
-                        .name(profile.getCategory().getName())
-                        .build())
-                .club(profile.getClub() != null ? ClubResponse.builder()
-                        .id(profile.getClub().getId())
-                        .name(profile.getClub().getName())
-                        .build() : null)
+                .styles(Optional.of(profile.getStyles())
+                        .orElse(Collections.emptySet())
+                        .stream().map(style -> StyleResponse.builder()
+                                .id(style.getId())
+                                .name(style.getName())
+                                .build())
+                        .collect(Collectors.toSet()))
+                .category(Optional.ofNullable(profile.getCategory())
+                        .map(category -> CategoryResponse.builder()
+                                .id(category.getId())
+                                .name(category.getName())
+                                .build())
+                        .orElse(null))
+                .club(Optional.ofNullable(profile.getClub())
+                        .map(club -> ClubResponse.builder()
+                                .id(club.getId())
+                                .name(club.getName())
+                                .build())
+                        .orElse(null))
                 .build();
     }
 }

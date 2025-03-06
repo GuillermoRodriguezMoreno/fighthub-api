@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public PageResponse<UserResponse> findAllUsers(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("firstname", "lastname").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<User> users = userRepository.findAll(pageable);
         List<UserResponse> userResponse = users.stream()
                 .map(userMapper::toUserResponse)

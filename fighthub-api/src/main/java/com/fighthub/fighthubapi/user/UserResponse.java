@@ -21,5 +21,4 @@ public class UserResponse {
     private boolean isAccountLocked;
     private boolean isAccountEnabled;
     private Set<String> roles;
-    private String fullName;
 }

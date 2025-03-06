@@ -71,6 +71,11 @@ public class FightMapper {
                                 .map(Club::getName)
                                 .orElse(null)
                 )
+                .redCornerFighterId(
+                        Optional.ofNullable(fight.getRedCornerFighter())
+                                .map(FighterProfile::getId)
+                                .orElse(null)
+                )
                 .redCornerFighterName(
                         Optional.ofNullable(fight.getRedCornerFighter())
                                 .map(FighterProfile::getFullName)
