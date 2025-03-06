@@ -64,12 +64,14 @@ public class FighterProfileService {
         fighterProfile.setWins(request.wins());
         fighterProfile.setLosses(request.losses());
         fighterProfile.setDraws(request.draws());
-        fighterProfile.setKo(request.ko());
+        fighterProfile.setKos(request.kos());
         fighterProfile.setWinsInARow(request.winsInARow());
         fighterProfile.setUser(request.user());
         fighterProfile.setStyles(request.styles());
         fighterProfile.setCategory(request.category());
         Optional.ofNullable(request.club()).ifPresent(fighterProfile::setClub);
+
+
 
         return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));
     }

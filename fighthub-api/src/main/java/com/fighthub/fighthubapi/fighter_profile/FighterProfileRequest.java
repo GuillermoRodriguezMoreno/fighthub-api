@@ -37,7 +37,7 @@ public record FighterProfileRequest(
         Integer wins,
         Integer losses,
         Integer draws,
-        Integer ko,
+        Integer kos,
         Integer winsInARow,
         Location location,
         @NotNull(message = "100")

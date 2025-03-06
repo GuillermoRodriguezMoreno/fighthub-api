@@ -22,6 +22,7 @@ public class Fight extends BaseEntity {
     private boolean isTitleFight;
     private boolean isClosed;
     private boolean isKo;
+    private boolean isDraw;
     private double weight;
     private int rounds;
     private int minutesPerRound;
@@ -47,5 +48,30 @@ public class Fight extends BaseEntity {
 
     public void incrementLikes() {
         this.likes++;
+    }
+
+    public void updateFighterStats() {
+        if (this.isDraw) {
+            if (this.blueCornerFighter != null) {
+                this.blueCornerFighter.incrementDraws();
+            }
+            if (this.redCornerFighter != null) {
+                this.redCornerFighter.incrementDraws();
+            }
+        } else if (this.winner != null) {
+            this.winner.incrementWins();
+            this.winner.incrementWinsInARow();
+            if (this.isKo) {
+                this.winner.incrementKos();
+            }
+            if (this.blueCornerFighter != null && !this.blueCornerFighter.equals(this.winner)) {
+                this.blueCornerFighter.incrementLosses();
+                this.blueCornerFighter.resetWinsInARow();
+            }
+            if (this.redCornerFighter != null && !this.redCornerFighter.equals(this.winner)) {
+                this.redCornerFighter.incrementLosses();
+                this.redCornerFighter.resetWinsInARow();
+            }
+        }
     }
 }

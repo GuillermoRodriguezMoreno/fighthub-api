@@ -60,7 +60,7 @@ public class FighterProfile {
     @Column(columnDefinition = "integer default 0")
     private Integer draws;
     @Column(columnDefinition = "integer default 0")
-    private Integer ko;
+    private Integer kos;
     @Column(name = "wins_in_a_row", columnDefinition = "integer default 0")
     private int winsInARow;
 
@@ -96,6 +96,30 @@ public class FighterProfile {
 
     public String getFullName() {
         return firstname + " " + lastname;
+    }
+
+    public void incrementWinsInARow() {
+        this.winsInARow++;
+    }
+
+    public void resetWinsInARow() {
+        this.winsInARow = 0;
+    }
+
+    public void incrementWins() {
+        this.wins++;
+    }
+
+    public void incrementLosses() {
+        this.losses++;
+    }
+
+    public void incrementDraws() {
+        this.draws++;
+    }
+
+    public void incrementKos() {
+        this.kos++;
     }
 
 }

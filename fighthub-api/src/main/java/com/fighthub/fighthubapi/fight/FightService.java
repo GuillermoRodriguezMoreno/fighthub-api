@@ -67,15 +67,27 @@ public class FightService {
         fight.setFightOrder(request.fightOrder());
         fight.setTitleFight(request.isTitleFight());
         fight.setClosed(request.isClosed());
+        fight.setKo(request.isKo());
+        fight.setDraw(request.isDraw());
         fight.setWeight(request.weight());
         fight.setRounds(request.rounds());
         fight.setMinutesPerRound(request.minutesPerRound());
+        fight.setLikes(request.likes());
+        fight.setWinner(request.winner());
         fight.setBlueCornerFighter(blueCornerFighter);
         fight.setRedCornerFighter(redCornerFighter);
         fight.setEvent(event);
         fight.setCategory(request.category());
         fight.setStyle(request.style());
-        fight.setLikes(request.likes());
+
+        fight.updateFighterStats();
+
+        if (fight.getBlueCornerFighter() != null) {
+            fighterProfileRepository.save(fight.getBlueCornerFighter());
+        }
+        if (fight.getRedCornerFighter() != null) {
+            fighterProfileRepository.save(fight.getRedCornerFighter());
+        }
 
         return fightMapper.toFightResponse(fightRepository.save(fight));
     }

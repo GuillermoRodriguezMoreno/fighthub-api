@@ -30,7 +30,7 @@ public class FighterProfileResponse {
     private Integer wins;
     private Integer losses;
     private Integer draws;
-    private Integer ko;
+    private Integer kos;
     private Integer winsInARow;
     private Location location;
     private Long userId;

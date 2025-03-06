@@ -24,7 +24,7 @@ public class FighterProfileMapper {
                 .wins(request.wins())
                 .losses(request.losses())
                 .draws(request.draws())
-                .ko(request.ko())
+                .kos(request.kos())
                 .winsInARow(request.winsInARow())
                 .location(request.location())
                 .user(request.user())
@@ -46,7 +46,7 @@ public class FighterProfileMapper {
                 .wins(profile.getWins())
                 .losses(profile.getLosses())
                 .draws(profile.getDraws())
-                .ko(profile.getKo())
+                .kos(profile.getKos())
                 .winsInARow(profile.getWinsInARow())
                 .location(profile.getLocation())
                 .userId(

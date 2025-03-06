@@ -19,10 +19,14 @@ public class FightResponse {
     private int fightOrder;
     private boolean isTitleFight;
     private boolean isClosed;
+    private boolean isKo;
+    private boolean isDraw;
     private double weight;
     private int rounds;
     private int minutesPerRound;
     private Long likes;
+    private Long winnerId;
+    private String winnerName;
     private Long blueCornerFighterId;
     private String blueCornerFighterName;
     private String blueCornerFighterClub;
