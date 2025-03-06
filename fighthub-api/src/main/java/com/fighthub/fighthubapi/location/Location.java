@@ -1,10 +1,7 @@
 package com.fighthub.fighthubapi.location;
 
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Location {
     private BigDecimal latitude;
     private BigDecimal longitude;
@@ -35,6 +33,6 @@ public class Location {
 
         BigDecimal c = BigDecimal.valueOf(2).multiply(BigDecimal.valueOf(Math.atan2(Math.sqrt(a.doubleValue()), Math.sqrt(1 - a.doubleValue()))));
 
-        return EARTH_RADIUS.multiply(c).setScale(2, RoundingMode.HALF_UP);
+        return EARTH_RADIUS.multiply(c).setScale(3, RoundingMode.HALF_EVEN);
     }
 }
