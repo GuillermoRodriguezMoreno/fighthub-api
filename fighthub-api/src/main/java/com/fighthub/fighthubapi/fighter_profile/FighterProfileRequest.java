@@ -2,6 +2,7 @@ package com.fighthub.fighthubapi.fighter_profile;
 
 import com.fighthub.fighthubapi.category.Category;
 import com.fighthub.fighthubapi.club.Club;
+import com.fighthub.fighthubapi.location.Location;
 import com.fighthub.fighthubapi.style.Style;
 import com.fighthub.fighthubapi.user.User;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +21,12 @@ public record FighterProfileRequest(
         @NotBlank(message = "Gender is required")
         String gender,
         String biography,
+        Integer wins,
+        Integer losses,
+        Integer draws,
+        Integer ko,
+        Integer winsInARow,
+        Location location,
         @NotNull(message = "100")
         User user,
         @NotNull(message = "Style are required")

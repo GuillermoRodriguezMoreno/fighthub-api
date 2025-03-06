@@ -9,8 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +32,12 @@ public class FighterProfileService {
                 .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
     }
 
-    public PageResponse<FighterProfileResponse> findAllFighterProfiles(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("weight").descending());
+    public PageResponse<FighterProfileResponse> findAllFighterProfiles(Integer page, Integer size, String orderBy) {
+        Sort sort = Sort.by("weight").descending();
+        if (orderBy != null && !orderBy.isEmpty()) {
+            sort = Sort.by(orderBy).descending();
+        }
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<FighterProfile> fighterProfiles = fighterProfileRepository.findAll(pageable);
         List<FighterProfileResponse> fighterProfileResponse = fighterProfiles.stream()
                 .map(fighterProfileMapper::toFighterProfileResponse)
@@ -52,6 +58,11 @@ public class FighterProfileService {
         fighterProfile.setHeight(request.height());
         fighterProfile.setGender(request.gender());
         Optional.ofNullable(request.biography()).ifPresent(fighterProfile::setBiography);
+        fighterProfile.setWins(request.wins());
+        fighterProfile.setLosses(request.losses());
+        fighterProfile.setDraws(request.draws());
+        fighterProfile.setKo(request.ko());
+        fighterProfile.setWinsInARow(request.winsInARow());
         fighterProfile.setUser(request.user());
         fighterProfile.setStyles(request.styles());
         fighterProfile.setCategory(request.category());
@@ -77,5 +88,18 @@ public class FighterProfileService {
                 fighterProfiles.getTotalPages(),
                 fighterProfiles.isFirst(),
                 fighterProfiles.isLast());
+    }
+
+    public Set<FighterProfileResponse> findAllFighterNearestToLocation(Long fighterId, Long kmRadius) {
+        FighterProfile currentFighterProfile = fighterProfileRepository.findById(fighterId)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterId));
+        BigDecimal radius = BigDecimal.valueOf(kmRadius);
+        List<FighterProfileResponse> fighterProfileResponse = fighterProfileRepository.findAll().stream()
+                .filter(fighter -> !fighter.getId().equals(fighterId))
+                .filter(fighter -> fighter.getLocation().distance(currentFighterProfile.getLocation()).compareTo(radius) <= 0)
+                .map(fighterProfileMapper::toFighterProfileResponse)
+                .toList();
+
+        return Set.copyOf(fighterProfileResponse);
     }
 }

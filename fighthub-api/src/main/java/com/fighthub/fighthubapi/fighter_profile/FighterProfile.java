@@ -7,6 +7,7 @@ import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.fight.Fight;
 import com.fighthub.fighthubapi.style.Style;
 import com.fighthub.fighthubapi.user.User;
+import com.fighthub.fighthubapi.location.Location;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,6 +26,19 @@ public class FighterProfile extends BaseEntity {
     private int height;
     private String gender;
     private String biography;
+    @Column(columnDefinition = "integer default 0")
+    private Integer wins;
+    @Column(columnDefinition = "integer default 0")
+    private Integer losses;
+    @Column(columnDefinition = "integer default 0")
+    private Integer draws;
+    @Column(columnDefinition = "integer default 0")
+    private Integer ko;
+    @Column(name = "wins_in_a_row", columnDefinition = "integer default 0")
+    private int winsInARow;
+
+    @Embedded
+    private Location location;
 
     @OneToOne
     @JoinColumn(name = "user_id")
