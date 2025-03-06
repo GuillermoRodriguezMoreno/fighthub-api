@@ -114,4 +114,11 @@ public class FightService {
                 fights.isFirst(),
                 fights.isLast());
     }
+
+    public Fight incrementLikes(Long fightId) {
+        Fight fight = fightRepository.findById(fightId)
+                .orElseThrow(() -> new EntityNotFoundException("fight not found with id: " + fightId));
+        fight.incrementLikes();
+        return fightRepository.save(fight);
+    }
 }

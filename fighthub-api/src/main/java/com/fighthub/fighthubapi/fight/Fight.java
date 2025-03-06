@@ -44,4 +44,8 @@ public class Fight extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "style_id")
     private Style style;
+
+    public void incrementLikes() {
+        this.likes++;
+    }
 }

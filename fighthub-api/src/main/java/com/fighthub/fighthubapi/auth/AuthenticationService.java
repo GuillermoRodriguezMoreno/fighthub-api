@@ -2,6 +2,8 @@ package com.fighthub.fighthubapi.auth;
 
 import com.fighthub.fighthubapi.email.EmailService;
 import com.fighthub.fighthubapi.email.EmailTemplateName;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfileRepository;
 import com.fighthub.fighthubapi.role.Role;
 import com.fighthub.fighthubapi.role.RoleRepository;
 import com.fighthub.fighthubapi.security.JwtService;
@@ -30,6 +32,7 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final FighterProfileRepository fighterProfileRepository;
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
     private final AuthenticationManager authenticationManager;
@@ -52,6 +55,11 @@ public class AuthenticationService {
                 .build();
 
         userRepository.save(user);
+        FighterProfile newUserProfile = FighterProfile.builder()
+                .user(user)
+                .createdBy(user.getEmail())
+                .build();
+        fighterProfileRepository.save(newUserProfile);
         sendValidationEmail(user);
     }
 

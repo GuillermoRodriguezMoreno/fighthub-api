@@ -27,6 +27,7 @@ public class Event extends BaseEntity {
     private String address;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Long likes;
 
     @ManyToOne()
     @JoinColumn(name = "organizer_id", nullable = false)
@@ -34,4 +35,8 @@ public class Event extends BaseEntity {
     @OneToMany(mappedBy = "event")
     @JsonIgnore
     private Set<Fight> fights = new HashSet<>();
+
+    public void incrementLikes() {
+        this.likes++;
+    }
 }

@@ -85,4 +85,11 @@ public class EventService {
                 events.isFirst(),
                 events.isLast());
     }
+
+    public Event incrementLikes(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + eventId));
+        event.incrementLikes();
+        return eventRepository.save(event);
+    }
 }

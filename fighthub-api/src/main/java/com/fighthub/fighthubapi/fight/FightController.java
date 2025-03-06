@@ -69,4 +69,12 @@ public class FightController {
     ) {
         return ResponseEntity.ok(fightservice.findFightsByEventId(eventId, page, size));
     }
+
+    @PostMapping("{fight_id}/like")
+    public ResponseEntity<Fight> likeFight(
+            @PathVariable("fight_id") Long fightId
+    ) {
+        Fight fight = fightservice.incrementLikes(fightId);
+        return ResponseEntity.ok(fight);
+    }
 }

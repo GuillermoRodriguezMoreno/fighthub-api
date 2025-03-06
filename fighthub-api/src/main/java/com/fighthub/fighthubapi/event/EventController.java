@@ -60,4 +60,12 @@ public class EventController {
     ) {
         return ResponseEntity.ok(eventService.findEventsByOrganizerProfile(organizerId, page, size));
     }
+
+    @PostMapping("{event_id}/like")
+    public ResponseEntity<Event> likeEvent(
+            @PathVariable("event_id") Long eventId
+    ) {
+        Event event = eventService.incrementLikes(eventId);
+        return ResponseEntity.ok(event);
+    }
 }
