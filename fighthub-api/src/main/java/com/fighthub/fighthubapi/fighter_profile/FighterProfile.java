@@ -52,6 +52,7 @@ public class FighterProfile {
     private int height;
     private String gender;
     private String biography;
+    private String profilePicture;
 
     @Column(columnDefinition = "integer default 0")
     private Integer wins;

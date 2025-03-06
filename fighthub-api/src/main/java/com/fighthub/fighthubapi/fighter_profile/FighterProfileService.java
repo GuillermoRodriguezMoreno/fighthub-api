@@ -3,13 +3,22 @@ package com.fighthub.fighthubapi.fighter_profile;
 import com.fighthub.fighthubapi.common.PageResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +26,14 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FighterProfileService {
 
     private final FighterProfileRepository fighterProfileRepository;
     private final FighterProfileMapper fighterProfileMapper;
+
+    @Value("${upload.path}") // Ruta de almacenamiento de imágenes (configurable en application.properties)
+    private String uploadPath;
 
     public Long saveFighterProfile(FighterProfileRequest request) {
         FighterProfile fighterProfile = fighterProfileMapper.toFighterProfile(request);
@@ -107,5 +120,27 @@ public class FighterProfileService {
                 .toList();
 
         return Set.copyOf(fighterProfileResponse);
+    }
+
+    public String uploadProfilePicture(Long profileId, MultipartFile file) throws IOException {
+        FighterProfile fighterProfile = fighterProfileRepository.findById(profileId)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + profileId));
+
+        Path uploadPathDestination = Paths.get(uploadPath);
+
+        if (!Files.exists(uploadPathDestination)) {
+            Files.createDirectories(uploadPathDestination);
+        }
+
+        String fileName = fighterProfile.getId() + "_profile_picture" ;
+        Path filePath = uploadPathDestination.resolve(fileName);
+
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        fighterProfile.setProfilePicture(fileName);
+
+        fighterProfileRepository.save(fighterProfile);
+
+        return filePath.toString();
     }
 }
