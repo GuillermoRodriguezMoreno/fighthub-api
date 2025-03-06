@@ -79,7 +79,8 @@ public class FighterProfileService {
     }
 
     public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size, String orderBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
+        Sort sort = orderBy.equals("firstname") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<FighterProfile> fighterProfiles = fighterProfileRepository.findAllByClubId(clubId, pageable);
         List<FighterProfileResponse> fighterProfileResponse = fighterProfiles.stream()
                 .map(fighterProfileMapper::toFighterProfileResponse)
