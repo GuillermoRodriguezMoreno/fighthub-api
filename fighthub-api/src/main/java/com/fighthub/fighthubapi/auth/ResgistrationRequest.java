@@ -16,12 +16,6 @@ import java.time.LocalDate;
 @Builder
 public class ResgistrationRequest {
 
-    @NotEmpty(message = "First name is required")
-    @NotBlank(message = "First name is required")
-    private String firstname;
-    @NotEmpty(message = "Last name is required")
-    @NotBlank(message = "Last name is required")
-    private String lastname;
     @NotEmpty(message = "Username is required")
     @NotBlank(message = "Username is required")
     private String username;

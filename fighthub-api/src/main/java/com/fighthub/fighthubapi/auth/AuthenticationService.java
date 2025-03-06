@@ -43,8 +43,6 @@ public class AuthenticationService {
                 .orElseThrow(() -> new IllegalStateException("Role not found"));
 
         User user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -101,13 +99,12 @@ public class AuthenticationService {
         );
         Map<String, Object> claims = new HashMap<>();
         User user = (User) auth.getPrincipal();
-        claims.put("fullname", user.getFullName());
         String jwtToken = jwtService.generateToken(claims, user);
         return AuthenticationResponse
                 .builder()
                 .token(jwtToken)
                 .email(user.getEmail())
-                .name(user.getNickname())
+                .username(user.getNickname())
                 .build();
     }
 

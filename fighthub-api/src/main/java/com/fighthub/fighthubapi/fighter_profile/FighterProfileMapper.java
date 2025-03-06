@@ -14,6 +14,9 @@ public class FighterProfileMapper {
 
     public FighterProfile toFighterProfile(FighterProfileRequest request) {
         return FighterProfile.builder()
+                .firstname(request.firstname())
+                .lastname(request.lastname())
+                .dateOfBirth(request.dateOfBirth())
                 .weight(request.weight())
                 .height(request.height())
                 .gender(request.gender())
@@ -34,6 +37,8 @@ public class FighterProfileMapper {
     public FighterProfileResponse toFighterProfileResponse(FighterProfile profile) {
         return FighterProfileResponse.builder()
                 .id(profile.getId())
+                .name(profile.getFullName())
+                .dateOfBirth(profile.getDateOfBirth())
                 .weight(profile.getWeight())
                 .height(profile.getHeight())
                 .gender(profile.getGender())
@@ -49,11 +54,6 @@ public class FighterProfileMapper {
                                 .map(User::getId)
                                 .orElse(null)
                 )
-                .name(
-                        Optional.ofNullable(profile.getUser())
-                                .map(User::getFullName)
-                                .orElse(null)
-                )
                 .username(
                         Optional.ofNullable(profile.getUser())
                                 .map(User::getNickname)
@@ -62,11 +62,6 @@ public class FighterProfileMapper {
                 .email(
                         Optional.ofNullable(profile.getUser())
                                 .map(User::getEmail)
-                                .orElse(null)
-                )
-                .dateOfBirth(
-                        Optional.ofNullable(profile.getUser())
-                                .map(User::getDateOfBirth)
                                 .orElse(null)
                 )
                 .styles(profile.getStyles().stream().map(style -> StyleResponse.builder()

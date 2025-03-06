@@ -21,6 +21,8 @@ import java.util.Set;
 @Builder
 public class FighterProfileResponse {
     private Long id;
+    private String name;
+    private LocalDate dateOfBirth;
     private double weight;
     private int height;
     private String gender;
@@ -32,10 +34,8 @@ public class FighterProfileResponse {
     private Integer winsInARow;
     private Location location;
     private Long userId;
-    private String name;
     private String username;
     private String email;
-    private LocalDate dateOfBirth;
     private Set<StyleResponse> styles;
     private CategoryResponse category;
     private ClubResponse club;

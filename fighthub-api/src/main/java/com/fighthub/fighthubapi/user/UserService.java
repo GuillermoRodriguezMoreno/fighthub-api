@@ -52,10 +52,7 @@ public class UserService {
     public UserResponse updateUser(Long userId, UserRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("user not found with id: " + userId));
-        user.setFirstname(request.firstname());
-        user.setLastname(request.lastname());
         user.setUsername(request.username());
-        user.setDateOfBirth(request.dateOfBirth());
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setAccountLocked(request.isAccountLocked());

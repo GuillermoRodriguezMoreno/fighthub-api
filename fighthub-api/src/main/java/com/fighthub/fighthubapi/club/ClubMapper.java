@@ -36,8 +36,7 @@ public class ClubMapper {
                 )
                 .ownerName(
                         Optional.ofNullable(club.getOwner())
-                                .map(FighterProfile::getUser)
-                                .map(User::getFullName)
+                                .map(FighterProfile::getFullName)
                                 .orElse(null)
                 )
                 .ownerUsername(

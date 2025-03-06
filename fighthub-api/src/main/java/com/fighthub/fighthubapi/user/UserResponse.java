@@ -16,10 +16,7 @@ import java.util.Set;
 @Builder
 public class UserResponse {
     private Long id;
-    private String firstname;
-    private String lastname;
     private String username;
-    private LocalDate dateOfBirth;
     private String email;
     private boolean isAccountLocked;
     private boolean isAccountEnabled;

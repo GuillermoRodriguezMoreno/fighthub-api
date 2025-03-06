@@ -54,6 +54,9 @@ public class FighterProfileService {
     public FighterProfileResponse updateFighterProfile(Long fighterProfileId, FighterProfileRequest request) {
         FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
                 .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
+        fighterProfile.setFirstname(request.firstname());
+        fighterProfile.setLastname(request.lastname());
+        fighterProfile.setDateOfBirth(request.dateOfBirth());
         fighterProfile.setWeight(request.weight());
         fighterProfile.setHeight(request.height());
         fighterProfile.setGender(request.gender());

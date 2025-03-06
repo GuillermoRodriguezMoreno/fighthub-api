@@ -1,5 +1,6 @@
 package com.fighthub.fighthubapi.user;
 
+import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,16 +31,16 @@ public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstname;
-    private String lastname;
     @Column(unique = true)
     private String username;
-    private LocalDate dateOfBirth;
     @Column(unique = true)
     private String email;
     private String password;
     private boolean isAccountLocked;
     private boolean isAccountEnabled;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FighterProfile fighterProfile;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -98,9 +99,5 @@ public class User implements UserDetails, Principal {
     @Override
     public boolean isEnabled() {
         return isAccountEnabled;
-    }
-
-    public String getFullName() {
-        return firstname + " " + lastname;
     }
 }

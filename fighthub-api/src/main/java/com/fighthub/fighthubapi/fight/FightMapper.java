@@ -46,8 +46,7 @@ public class FightMapper {
                 )
                 .blueCornerFighterName(
                         Optional.ofNullable(fight.getBlueCornerFighter())
-                                .map(FighterProfile::getUser)
-                                .map(User::getFullName)
+                                .map(FighterProfile::getFullName)
                                 .orElse(null)
                 )
 
@@ -59,8 +58,7 @@ public class FightMapper {
                 )
                 .redCornerFighterName(
                         Optional.ofNullable(fight.getRedCornerFighter())
-                                .map(FighterProfile::getUser)
-                                .map(User::getFullName)
+                                .map(FighterProfile::getFullName)
                                 .orElse(null)
                 )
                 .redCornerFighterClub(
