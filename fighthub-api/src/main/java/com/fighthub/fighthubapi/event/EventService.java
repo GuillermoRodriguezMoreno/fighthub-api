@@ -33,10 +33,7 @@ public class EventService {
     }
 
     public PageResponse<EventResponse> findAllEvents(Integer page, Integer size, String orderBy) {
-        Sort sort = Sort.by("startDate", "name").descending();
-        if (orderBy != null && !orderBy.isEmpty()) {
-            sort = Sort.by(orderBy).descending();
-        }
+        Sort sort = Sort.by(orderBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Event> events = eventRepository.findAll(pageable);
         List<EventResponse> eventResponse = events.stream()
@@ -70,8 +67,8 @@ public class EventService {
         eventRepository.deleteById(eventId);
     }
 
-    public PageResponse<EventResponse> findEventsByOrganizerProfile(Long organizerId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("startDate", "name").descending());
+    public PageResponse<EventResponse> findEventsByOrganizerProfile(Long organizerId, Integer page, Integer size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<Event> events = eventRepository.findAllByOrganizerProfileId(organizerId ,pageable);
         List<EventResponse> eventResponse = events.stream()
                 .map(eventMapper::toEventResponse)

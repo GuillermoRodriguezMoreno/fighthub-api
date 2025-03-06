@@ -29,8 +29,8 @@ public class RoleService {
                 .orElseThrow(() -> new EntityNotFoundException("Role not found with id: " + roleId));
     }
 
-    public PageResponse<RoleResponse> findAllRoles(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("name").descending());
+    public PageResponse<RoleResponse> findAllRoles(Integer page, Integer size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<Role> roles = roleRepository.findAll(pageable);
         List<RoleResponse> roleResponse = roles.stream()
                 .map(roleMapper::toRoleResponse)

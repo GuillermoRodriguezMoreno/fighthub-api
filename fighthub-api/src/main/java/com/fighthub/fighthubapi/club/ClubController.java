@@ -36,7 +36,7 @@ public class ClubController {
     public ResponseEntity<PageResponse<ClubResponse>> findAllClubs(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
-            @RequestParam(name = "orderBy", required = false) String orderBy
+            @RequestParam(name = "orderBy", defaultValue = "name" ,required = false) String orderBy
     ){
         return ResponseEntity.ok(clubService.findAllClubs(page, size, orderBy));
     }
@@ -57,9 +57,7 @@ public class ClubController {
 
     @GetMapping("/owner/{owner-id}")
     public ResponseEntity<ClubResponse> findClubsByOwner(
-            @PathVariable("owner-id") Long ownerId,
-            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @PathVariable("owner-id") Long ownerId
     ) {
         return ResponseEntity.ok(clubService.findClubByOwnerId(ownerId));
     }

@@ -32,9 +32,10 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<PageResponse<CategoryResponse>> findAllCategories(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "orderBy", defaultValue = "name" ,required = false) String orderBy
     ){
-        return ResponseEntity.ok(categoryService.findAllCategories(page, size));
+        return ResponseEntity.ok(categoryService.findAllCategories(page, size, orderBy));
     }
     @PutMapping("{category-id}")
     public ResponseEntity<CategoryResponse> updateCategory(

@@ -35,7 +35,7 @@ public class FighterProfileController {
     public ResponseEntity<PageResponse<FighterProfileResponse>> findAllFighterProfiles(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
-            @RequestParam(name = "orderBy", required = false) String orderBy
+            @RequestParam(name = "orderBy", defaultValue = "firstname", required = false) String orderBy
     ){
         return ResponseEntity.ok(fighterProfileservice.findAllFighterProfiles(page, size, orderBy));
     }
@@ -58,9 +58,10 @@ public class FighterProfileController {
     public ResponseEntity<PageResponse<FighterProfileResponse>> findFighterProfilesByClub(
             @PathVariable("club-id") Long clubId,
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "orderBy", defaultValue = "name", required = false) String orderBy
     ) {
-        return ResponseEntity.ok(fighterProfileservice.findAllFighterProfilesByClubId(clubId, page, size));
+        return ResponseEntity.ok(fighterProfileservice.findAllFighterProfilesByClubId(clubId, page, size, orderBy));
     }
 
     @GetMapping("/{fighter_id}/nearest")

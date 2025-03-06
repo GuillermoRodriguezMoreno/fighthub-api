@@ -92,8 +92,9 @@ public class FightService {
         fightRepository.deleteById(fightId);
     }
 
-    public PageResponse<FightResponse> findFightsByFighterId(Long fighterId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public PageResponse<FightResponse> findFightsByFighterId(Long fighterId, Integer page, Integer size, String orderBy) {
+        Sort sort = Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Fight> fights = fightRepository.findAllByBlueCornerFighterIdOrRedCornerFighterId(fighterId, pageable);
         List<FightResponse> fightResponse = fights.stream()
                 .map(fightMapper::toFightResponse)
@@ -108,8 +109,9 @@ public class FightService {
                 fights.isLast());
     }
 
-    public PageResponse<FightResponse> findFightsByEventId(Long eventId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("fightOrder").descending());
+    public PageResponse<FightResponse> findFightsByEventId(Long eventId, Integer page, Integer size, String orderBy) {
+        Sort sort = orderBy.equals("fightOrder") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Fight> fights = fightRepository.findAllByEventId(eventId, pageable);
         List<FightResponse> fightResponse = fights.stream()
                 .map(fightMapper::toFightResponse)

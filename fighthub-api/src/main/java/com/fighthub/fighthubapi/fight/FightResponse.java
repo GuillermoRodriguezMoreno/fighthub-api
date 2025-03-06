@@ -9,6 +9,9 @@ import com.fighthub.fighthubapi.fighter_profile.FighterProfileResponse;
 import com.fighthub.fighthubapi.style.Style;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,6 +20,7 @@ import lombok.*;
 public class FightResponse {
     private Long id;
     private Integer fightOrder;
+    private LocalDate fightDate;
     private boolean isTitleFight;
     private boolean isClosed;
     private boolean isKo;

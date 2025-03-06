@@ -30,8 +30,8 @@ public class StyleService {
                 .orElseThrow(() -> new EntityNotFoundException("Style not found with id: " + styleId));
     }
 
-    public PageResponse<StyleResponse> findAllStyles(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("name").descending());
+    public PageResponse<StyleResponse> findAllStyles(Integer page, Integer size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<Style> styles = styleRepository.findAll(pageable);
         List<StyleResponse> styleResponse = styles.stream()
                 .map(styleMapper::toStyleResponse)

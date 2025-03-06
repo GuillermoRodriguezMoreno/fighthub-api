@@ -33,8 +33,8 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("user not found with id: " + userId));
     }
 
-    public PageResponse<UserResponse> findAllUsers(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+    public PageResponse<UserResponse> findAllUsers(Integer page, Integer size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<User> users = userRepository.findAll(pageable);
         List<UserResponse> userResponse = users.stream()
                 .map(userMapper::toUserResponse)

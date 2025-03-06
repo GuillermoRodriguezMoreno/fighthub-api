@@ -35,10 +35,7 @@ public class ClubService {
     }
 
     public PageResponse<ClubResponse> findAllClubs(Integer page, Integer size, String orderBy) {
-        Sort sort = Sort.by("name").descending();
-        if (orderBy != null && !orderBy.isEmpty()) {
-            sort = Sort.by(orderBy).descending();
-        }
+        Sort sort = orderBy.equals("name") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Club> clubs = clubRepository.findAll(pageable);
         List<ClubResponse> clubResponse = clubs.stream()

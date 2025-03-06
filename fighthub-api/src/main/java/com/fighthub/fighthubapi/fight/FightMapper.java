@@ -1,12 +1,12 @@
 package com.fighthub.fighthubapi.fight;
 
-import org.springframework.stereotype.Service;
-import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.category.Category;
+import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.event.Event;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.style.Style;
-import com.fighthub.fighthubapi.user.User;
+import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
@@ -35,6 +35,11 @@ public class FightMapper {
     public FightResponse toFightResponse(Fight fight) {
         return FightResponse.builder()
                 .id(fight.getId())
+                .fightDate(
+                        Optional.ofNullable(fight.getEvent())
+                                .map(Event::getStartDate)
+                                .orElse(null)
+                )
                 .fightOrder(fight.getFightOrder())
                 .isTitleFight(fight.isTitleFight())
                 .isClosed(fight.isClosed())

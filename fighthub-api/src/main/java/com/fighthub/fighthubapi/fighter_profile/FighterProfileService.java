@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,10 +34,7 @@ public class FighterProfileService {
     }
 
     public PageResponse<FighterProfileResponse> findAllFighterProfiles(Integer page, Integer size, String orderBy) {
-        Sort sort = Sort.by("weight").descending();
-        if (orderBy != null && !orderBy.isEmpty()) {
-            sort = Sort.by(orderBy).descending();
-        }
+        Sort sort = orderBy.equals("firstname") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<FighterProfile> fighterProfiles = fighterProfileRepository.findAll(pageable);
         List<FighterProfileResponse> fighterProfileResponse = fighterProfiles.stream()
@@ -51,6 +49,7 @@ public class FighterProfileService {
                 fighterProfiles.isFirst(),
                 fighterProfiles.isLast());
     }
+
     public FighterProfileResponse updateFighterProfile(Long fighterProfileId, FighterProfileRequest request) {
         FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
                 .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
@@ -72,15 +71,15 @@ public class FighterProfileService {
         Optional.ofNullable(request.club()).ifPresent(fighterProfile::setClub);
 
 
-
         return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));
     }
+
     public void deleteFighterProfile(Long fighterProfileId) {
         fighterProfileRepository.deleteById(fighterProfileId);
     }
 
-    public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("weight").descending());
+    public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<FighterProfile> fighterProfiles = fighterProfileRepository.findAllByClubId(clubId, pageable);
         List<FighterProfileResponse> fighterProfileResponse = fighterProfiles.stream()
                 .map(fighterProfileMapper::toFighterProfileResponse)
@@ -102,6 +101,7 @@ public class FighterProfileService {
         List<FighterProfileResponse> fighterProfileResponse = fighterProfileRepository.findAll().stream()
                 .filter(fighter -> !fighter.getId().equals(fighterId))
                 .filter(fighter -> fighter.getLocation().distance(currentFighterProfile.getLocation()).compareTo(radius) <= 0)
+                .sorted(Comparator.comparing(fighter -> fighter.getLocation().distance(currentFighterProfile.getLocation())))
                 .map(fighterProfileMapper::toFighterProfileResponse)
                 .toList();
 

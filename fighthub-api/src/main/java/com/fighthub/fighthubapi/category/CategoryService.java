@@ -28,8 +28,8 @@ public class CategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + categoryId));
     }
 
-    public PageResponse<CategoryResponse> findAllCategories(Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("name").descending());
+    public PageResponse<CategoryResponse> findAllCategories(Integer page, Integer size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Page<Category> categories = categoryRepository.findAll(pageable);
         List<CategoryResponse> categoryResponse = categories.stream()
                 .map(categoryMapper::toCategoryResponse)

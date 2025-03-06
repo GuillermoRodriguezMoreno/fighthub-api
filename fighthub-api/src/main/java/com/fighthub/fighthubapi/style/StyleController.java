@@ -32,9 +32,10 @@ public class StyleController {
     @GetMapping
     public ResponseEntity<PageResponse<StyleResponse>> findAllStyles(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "orderBy", defaultValue = "name", required = false) String orderBy
     ){
-        return ResponseEntity.ok(styleService.findAllStyles(page, size));
+        return ResponseEntity.ok(styleService.findAllStyles(page, size, orderBy));
     }
     @PutMapping("{style-id}")
     public ResponseEntity<StyleResponse> updateStyle(
