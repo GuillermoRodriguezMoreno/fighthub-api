@@ -32,7 +32,7 @@ public class FighterProfileService {
     private final FighterProfileRepository fighterProfileRepository;
     private final FighterProfileMapper fighterProfileMapper;
 
-    @Value("${upload.path}") // Ruta de almacenamiento de imágenes (configurable en application.properties)
+    @Value("${upload.path}")
     private String uploadPath;
 
     public Long saveFighterProfile(FighterProfileRequest request) {
@@ -133,7 +133,7 @@ public class FighterProfileService {
             Files.createDirectories(uploadPathDestination);
         }
 
-        String fileName = fighterProfile.getId() + "_profile_picture" ;
+        String fileName = fighterProfile.getId() + "_profile_picture_" + file.getOriginalFilename();
         Path filePath = uploadPathDestination.resolve(fileName);
 
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);

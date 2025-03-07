@@ -4,10 +4,20 @@ import com.fighthub.fighthubapi.common.PageResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -57,5 +67,20 @@ public class PictureController {
             @PathVariable("fighter-profile-id") Long fighterProfileId
     ) {
         return ResponseEntity.ok(pictureService.findAllPicturesByFighterProfileId(fighterProfileId));
+    }
+
+    @PostMapping("/{fighter-profile-id}/upload-multiple")
+    public ResponseEntity<List<String>> uploadMultiplePictures(
+            @PathVariable("fighter-profile-id") Long fighterProfileId,
+            @RequestParam("files") List<MultipartFile> files) {
+
+        try {
+            List<String> uploadedFiles = pictureService.uploadFighterProfilePictures(fighterProfileId, files);
+            return ResponseEntity.ok(uploadedFiles);
+        }  catch (Exception e) {
+            List<String> errorResponse = new ArrayList<>();
+            errorResponse.add(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 }
