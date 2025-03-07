@@ -81,6 +81,7 @@ public class FighterProfileService {
         fighterProfile.setUser(request.user());
         fighterProfile.setStyles(request.styles());
         fighterProfile.setCategory(request.category());
+        fighterProfile.setPictures(request.pictures());
         Optional.ofNullable(request.club()).ifPresent(fighterProfile::setClub);
 
 

@@ -5,6 +5,7 @@ import com.fighthub.fighthubapi.category.Category;
 import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.fight.Fight;
+import com.fighthub.fighthubapi.picture.Picture;
 import com.fighthub.fighthubapi.style.Style;
 import com.fighthub.fighthubapi.user.User;
 import com.fighthub.fighthubapi.location.Location;
@@ -94,6 +95,9 @@ public class FighterProfile {
     @JsonIgnore
     @OneToMany(mappedBy = "redCornerFighter", cascade = CascadeType.MERGE)
     private Set<Fight> redCornerFights = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "fighterProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Picture> pictures = new HashSet<>();
 
     public String getFullName() {
         return firstname + " " + lastname;

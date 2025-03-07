@@ -3,6 +3,7 @@ package com.fighthub.fighthubapi.fighter_profile;
 import com.fighthub.fighthubapi.category.Category;
 import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.location.Location;
+import com.fighthub.fighthubapi.picture.Picture;
 import com.fighthub.fighthubapi.style.Style;
 import com.fighthub.fighthubapi.user.User;
 import jakarta.validation.constraints.NotBlank;
@@ -46,5 +47,6 @@ public record FighterProfileRequest(
         Set<Style> styles,
         @NotNull(message = "Category are required")
         Category category,
-        Club club
+        Club club,
+        Set<Picture> pictures
 ) {}
