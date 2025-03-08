@@ -41,9 +41,9 @@ public class FighterProfileController {
     ) {
         return ResponseEntity.ok(fighterProfileService.saveFighterProfile(request));
     }
-    @GetMapping("{fighterProfile-id}")
+    @GetMapping("{fighter-profile-id}")
     public ResponseEntity<FighterProfileResponse> findFighterProfileById(
-            @PathVariable("fighterProfile-id") Long fighterProfileId
+            @PathVariable("fighter-profile-id") Long fighterProfileId
     ) {
         return ResponseEntity.ok(fighterProfileService.findFighterProfileById(fighterProfileId));
     }
@@ -55,16 +55,16 @@ public class FighterProfileController {
     ){
         return ResponseEntity.ok(fighterProfileService.findAllFighterProfiles(page, size, orderBy));
     }
-    @PutMapping("{fighterProfile-id}")
+    @PutMapping("{fighter-profile-id}")
     public ResponseEntity<FighterProfileResponse> updateFighterProfile(
-            @PathVariable("fighterProfile-id") Long fighterProfileId,
+            @PathVariable("fighter-profile-id") Long fighterProfileId,
             @Valid @RequestBody FighterProfileRequest request
     ) {
         return ResponseEntity.ok(fighterProfileService.updateFighterProfile(fighterProfileId, request));
     }
-    @DeleteMapping("{fighterProfile-id}")
+    @DeleteMapping("{fighter-profile-id}")
     public ResponseEntity<Void> deleteFighterProfile(
-            @PathVariable("fighterProfile-id") Long fighterProfileId
+            @PathVariable("fighter-profile-id") Long fighterProfileId
     ) {
         fighterProfileService.deleteFighterProfile(fighterProfileId);
         return ResponseEntity.noContent().build();

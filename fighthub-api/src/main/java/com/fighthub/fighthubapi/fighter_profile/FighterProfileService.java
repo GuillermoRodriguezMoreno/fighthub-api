@@ -3,6 +3,8 @@ package com.fighthub.fighthubapi.fighter_profile;
 import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.user.User;
+import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,7 @@ public class FighterProfileService {
 
     private final FighterProfileRepository fighterProfileRepository;
     private final FighterProfileMapper fighterProfileMapper;
-    private final ClubRepository clubRepository;
+    private final UserRepository userRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -93,7 +95,18 @@ public class FighterProfileService {
     public void deleteFighterProfile(Long fighterProfileId) {
         FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
                 .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
-        fighterProfileRepository.delete(fighterProfile);
+        fighterProfile.getClubsOwned().forEach(club -> club.setOwner(null));
+        fighterProfile.getBlueCornerFights().forEach(fight -> fight.setBlueCornerFighter(null));
+        fighterProfile.getRedCornerFights().forEach(fight -> fight.setRedCornerFighter(null));
+
+        User user = userRepository.findById(fighterProfile.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("user not found with id: " + fighterProfile.getUser().getId()));
+
+        fighterProfile.setUser(null);
+        user.setFighterProfile(null);
+
+        userRepository.save(user);
+        fighterProfileRepository.deleteById(fighterProfileId);
     }
 
     public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size, String orderBy) {
