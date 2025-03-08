@@ -1,5 +1,7 @@
 package com.fighthub.fighthubapi.fighter_profile;
 
+import com.fighthub.fighthubapi.club.Club;
+import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -31,6 +32,7 @@ public class FighterProfileService {
 
     private final FighterProfileRepository fighterProfileRepository;
     private final FighterProfileMapper fighterProfileMapper;
+    private final ClubRepository clubRepository;
 
     @Value("${upload.path}")
     private String uploadPath;

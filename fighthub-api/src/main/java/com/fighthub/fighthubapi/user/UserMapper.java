@@ -1,9 +1,11 @@
 package com.fighthub.fighthubapi.user;
 
+import com.fighthub.fighthubapi.role.Role;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import com.fighthub.fighthubapi.role.Role;
 
 @Service
 public class UserMapper {
@@ -27,6 +29,10 @@ public class UserMapper {
                 .email(user.getEmail())
                 .isAccountLocked(user.isAccountLocked())
                 .isAccountEnabled(user.isAccountEnabled())
+                .createdAt(user.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                .updatedAt(Optional.ofNullable(user.getUpdatedAt())
+                        .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                        .orElse(null))
                 .roles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()))
                 .build();
     }

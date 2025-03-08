@@ -86,7 +86,7 @@ public class FighterProfile {
     @ManyToOne()
     @JoinColumn(name = "club_id")
     private Club club;
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.MERGE)
     @JsonIgnore
     private Set<Club> clubsOwned = new HashSet<>();
     @OneToMany(mappedBy = "blueCornerFighter", cascade = CascadeType.MERGE)

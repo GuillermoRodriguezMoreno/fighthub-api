@@ -1,12 +1,7 @@
 package com.fighthub.fighthubapi.user;
 
-import com.fighthub.fighthubapi.club.Club;
-import com.fighthub.fighthubapi.role.Role;
-
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,5 +15,7 @@ public class UserResponse {
     private String email;
     private boolean isAccountLocked;
     private boolean isAccountEnabled;
+    private String createdAt;
+    private String updatedAt;
     private Set<String> roles;
 }
