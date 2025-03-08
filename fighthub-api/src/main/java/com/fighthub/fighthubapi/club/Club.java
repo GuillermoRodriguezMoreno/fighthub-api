@@ -29,12 +29,12 @@ public class Club extends BaseEntity {
     private String phone;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(name = "owner_id")
     private FighterProfile owner;
-    @OneToMany(mappedBy = "organizer")
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.MERGE)
     @JsonIgnore
     private Set<Event> eventsOrganized = new HashSet<>();
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", cascade = CascadeType.MERGE)
     @JsonIgnore
     private Set<FighterProfile> members = new HashSet<>();
 }

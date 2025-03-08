@@ -50,6 +50,10 @@ public class CategoryService {
         return categoryMapper.toCategoryResponse(categoryRepository.save(category));
     }
     public void deleteCategory(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + categoryId));
+        category.getFights().forEach(fight -> fight.setCategory(null));
+        category.getFighterProfiles().forEach(fighterProfile -> fighterProfile.setCategory(null));
         categoryRepository.deleteById(categoryId);
     }
 }

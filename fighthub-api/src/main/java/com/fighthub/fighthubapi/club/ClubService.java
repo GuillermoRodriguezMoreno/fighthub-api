@@ -2,6 +2,7 @@ package com.fighthub.fighthubapi.club;
 
 import com.fighthub.fighthubapi.common.PageResponse;
 import com.fighthub.fighthubapi.club.*;
+import com.fighthub.fighthubapi.event.Event;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfileRepository;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfileService;
@@ -65,6 +66,10 @@ public class ClubService {
         return clubMapper.toClubResponse(clubRepository.save(club));
     }
     public void deleteClub(Long clubId) {
+        Club club = clubRepository.findById(clubId)
+                .orElseThrow(() -> new EntityNotFoundException("club not found with id: " + clubId));
+        club.getEventsOrganized().forEach(event -> event.setOrganizer(null));
+        club.getMembers().forEach(fighterProfile -> fighterProfile.setClub(null));
         clubRepository.deleteById(clubId);
     }
 

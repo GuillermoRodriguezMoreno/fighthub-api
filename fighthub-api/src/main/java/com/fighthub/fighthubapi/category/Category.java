@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fighthub.fighthubapi.common.BaseEntity;
 import com.fighthub.fighthubapi.fight.Fight;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -24,10 +25,10 @@ import java.util.Set;
 public class Category extends BaseEntity {
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
     @JsonIgnore
     private Set<FighterProfile> fighterProfiles = new HashSet<>();
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.MERGE)
     @JsonIgnore
     private Set<Fight> fights = new HashSet<>();
 }

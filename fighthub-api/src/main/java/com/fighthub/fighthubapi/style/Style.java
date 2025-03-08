@@ -23,7 +23,7 @@ public class Style extends BaseEntity {
         @ManyToMany(mappedBy = "styles")
         @JsonIgnore
         private Set<FighterProfile> fighters = new HashSet<>();
-        @OneToMany(mappedBy = "style")
+        @OneToMany(mappedBy = "style", cascade = CascadeType.MERGE)
         @JsonIgnore
         private Set<Fight> fights = new HashSet<>();
 }

@@ -91,7 +91,9 @@ public class FighterProfileService {
     }
 
     public void deleteFighterProfile(Long fighterProfileId) {
-        fighterProfileRepository.deleteById(fighterProfileId);
+        FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
+        fighterProfileRepository.delete(fighterProfile);
     }
 
     public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size, String orderBy) {

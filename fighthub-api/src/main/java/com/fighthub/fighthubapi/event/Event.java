@@ -30,9 +30,9 @@ public class Event extends BaseEntity {
     private Long likes;
 
     @ManyToOne()
-    @JoinColumn(name = "organizer_id", nullable = false)
+    @JoinColumn(name = "organizer_id")
     private Club organizer;
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Fight> fights = new HashSet<>();
 
