@@ -55,12 +55,16 @@ public class FightService {
     public FightResponse updateFight(Long fightId, FightRequest request) {
         Fight fight = fightRepository.findById(fightId)
                 .orElseThrow(() -> new EntityNotFoundException("fight not found with id: " + fightId));
-        FighterProfile blueCornerFighter = fighterProfileRepository.findById(request.blueCornerFighter().getId())
-                .orElseThrow(() -> new EntityNotFoundException("fighter not found with id: " + request.blueCornerFighter().getId()));
-        FighterProfile redCornerFighter = fighterProfileRepository.findById(request.redCornerFighter().getId())
-                .orElseThrow(() -> new EntityNotFoundException("fighter not found with id: " + request.redCornerFighter().getId()));
+        FighterProfile blueCornerFighter = request.blueCornerFighter() != null ? fighterProfileRepository.findById(request.blueCornerFighter().getId())
+                .orElseThrow(() -> new EntityNotFoundException("fighter not found with id: " + request.blueCornerFighter().getId())) : null;
+        FighterProfile redCornerFighter = request.redCornerFighter() != null ? fighterProfileRepository.findById(request.redCornerFighter().getId())
+                .orElseThrow(() -> new EntityNotFoundException("fighter not found with id: " + request.redCornerFighter().getId())) : null;
         Event event = eventRepository.findById(request.event().getId())
                 .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + request.event().getId()));
+
+        FighterProfile winner = request.winner() != null ? fighterProfileRepository.findById(request.winner().getId())
+                .orElseThrow(() -> new EntityNotFoundException("fighter not found with id: " + request.winner().getId())) : null;
+        // TODO control de winner
         fight.setFightOrder(request.fightOrder());
         fight.setTitleFight(request.isTitleFight());
         fight.setClosed(request.isClosed());
@@ -70,7 +74,7 @@ public class FightService {
         fight.setRounds(request.rounds());
         fight.setMinutesPerRound(request.minutesPerRound());
         fight.setLikes(request.likes());
-        fight.setWinner(request.winner());
+        fight.setWinner(winner);
         fight.setBlueCornerFighter(blueCornerFighter);
         fight.setRedCornerFighter(redCornerFighter);
         fight.setEvent(event);

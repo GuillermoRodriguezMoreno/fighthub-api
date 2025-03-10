@@ -56,15 +56,15 @@ public class FighterProfile {
     private String profilePicture;
 
     @Column(columnDefinition = "integer default 0")
-    private Integer wins;
+    private Integer wins = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer losses;
+    private Integer losses = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer draws;
+    private Integer draws = 0;
     @Column(columnDefinition = "integer default 0")
-    private Integer kos;
+    private Integer kos = 0;
     @Column(name = "wins_in_a_row", columnDefinition = "integer default 0")
-    private int winsInARow;
+    private int winsInARow = 0;
 
     @Embedded
     private Location location;
