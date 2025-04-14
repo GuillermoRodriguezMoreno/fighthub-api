@@ -61,10 +61,11 @@ public class FightService {
                 .orElseThrow(() -> new EntityNotFoundException("fighter not found with id: " + request.redCornerFighter().getId())) : null;
         Event event = eventRepository.findById(request.event().getId())
                 .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + request.event().getId()));
-
         FighterProfile winner = request.winner() != null ? fighterProfileRepository.findById(request.winner().getId())
                 .orElseThrow(() -> new EntityNotFoundException("fighter not found with id: " + request.winner().getId())) : null;
-        // TODO control de winner
+        if (winner != null && !winner.equals(blueCornerFighter) && !winner.equals(redCornerFighter)) {
+            throw new IllegalArgumentException("Winner must be one of the fighters in the fight");
+        }
         fight.setFightOrder(request.fightOrder());
         fight.setTitleFight(request.isTitleFight());
         fight.setClosed(request.isClosed());

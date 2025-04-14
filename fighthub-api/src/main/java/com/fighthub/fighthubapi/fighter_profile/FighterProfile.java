@@ -64,7 +64,7 @@ public class FighterProfile {
     @Column(columnDefinition = "integer default 0")
     private Integer kos = 0;
     @Column(name = "wins_in_a_row", columnDefinition = "integer default 0")
-    private int winsInARow = 0;
+    private Integer winsInARow = 0;
 
     @Embedded
     private Location location;
@@ -96,7 +96,7 @@ public class FighterProfile {
     @OneToMany(mappedBy = "redCornerFighter", cascade = CascadeType.MERGE)
     private Set<Fight> redCornerFights = new HashSet<>();
     @JsonIgnore
-    @OneToMany(mappedBy = "fighterProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fighterProfile", cascade = CascadeType.ALL)
     private Set<Picture> pictures = new HashSet<>();
 
     public String getFullName() {

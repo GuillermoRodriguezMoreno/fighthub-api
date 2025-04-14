@@ -77,16 +77,12 @@ public class FighterProfileService {
         fighterProfile.setHeight(request.height());
         fighterProfile.setGender(request.gender());
         Optional.ofNullable(request.biography()).ifPresent(fighterProfile::setBiography);
-        fighterProfile.setWins(request.wins());
-        fighterProfile.setLosses(request.losses());
-        fighterProfile.setDraws(request.draws());
-        fighterProfile.setKos(request.kos());
-        fighterProfile.setWinsInARow(request.winsInARow());
-        fighterProfile.setUser(request.user());
         fighterProfile.setStyles(request.styles());
         fighterProfile.setCategory(request.category());
         fighterProfile.setPictures(request.pictures());
         Optional.ofNullable(request.club()).ifPresent(fighterProfile::setClub);
+        Optional.ofNullable(request.location()).ifPresent(fighterProfile::setLocation);
+        Optional.ofNullable(request.pictures()).ifPresent(fighterProfile::setPictures);
 
 
         return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));

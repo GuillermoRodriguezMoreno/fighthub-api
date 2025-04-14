@@ -41,7 +41,6 @@ public record FighterProfileRequest(
         Integer kos,
         Integer winsInARow,
         Location location,
-        @NotNull(message = "100")
         User user,
         @NotNull(message = "Style are required")
         Set<Style> styles,
