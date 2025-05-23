@@ -2,6 +2,7 @@ package com.fighthub.fighthubapi.user;
 
 import com.fighthub.fighthubapi.common.PageResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
     public ResponseEntity<Long> saveUser(
             @Valid @RequestBody UserRequest request,
             Authentication connectedUser
-    ) {
+    ) throws MessagingException {
         return ResponseEntity.ok(userService.saveUser(request));
     }
     @GetMapping("{user-id}")

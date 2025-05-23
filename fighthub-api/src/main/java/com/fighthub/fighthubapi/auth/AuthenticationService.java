@@ -63,7 +63,7 @@ public class AuthenticationService {
         sendValidationEmail(user);
     }
 
-    private void sendValidationEmail(User user) throws MessagingException {
+    public void sendValidationEmail(User user) throws MessagingException {
         String newToken = generateAndSaveActivationToken(user);
         emailService.sendEmail(
                 user.getEmail(),

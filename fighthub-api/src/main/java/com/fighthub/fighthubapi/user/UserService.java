@@ -1,7 +1,11 @@
 package com.fighthub.fighthubapi.user;
 
+import com.fighthub.fighthubapi.auth.AuthenticationService;
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfileRepository;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfileService;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +27,30 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final FighterProfileService fighterProfileService;
+    private final FighterProfileRepository fighterProfileRepository;
+    private final AuthenticationService authenticationService;
+    private final TokenRepository tokenRepository;
 
-    public Long saveUser(UserRequest request) {
-        User user = userMapper.toUser(request);
-        user.setPassword(passwordEncoder.encode(request.password()));
-        return userRepository.save(user).getId();
+
+    public Long saveUser(UserRequest request) throws MessagingException {
+        User user = User.builder()
+                .username(request.username())
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
+                .isAccountEnabled(request.isAccountEnabled())
+                .isAccountLocked(request.isAccountLocked())
+                .roles(request.roles())
+                .build();
+        Long newUserId = userRepository.save(user).getId();
+        FighterProfile newUserProfile = FighterProfile.builder()
+                .user(user)
+                .createdBy(user.getEmail())
+                .build();
+        fighterProfileRepository.save(newUserProfile);
+        if (!user.isAccountEnabled()) {
+            authenticationService.sendValidationEmail(user);
+        }
+        return newUserId;
     }
 
     public UserResponse findUserById(Long userId) {
@@ -73,6 +96,7 @@ public class UserService {
             throw new EntityNotFoundException("user not found with id: " + userId);
         }
         fighterProfileService.deleteFighterProfile(userId);
+        tokenRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
     }
 }
