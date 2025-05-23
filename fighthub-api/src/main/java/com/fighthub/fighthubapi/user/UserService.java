@@ -1,7 +1,9 @@
 package com.fighthub.fighthubapi.user;
 
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfileService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final FighterProfileService fighterProfileService;
 
     public Long saveUser(UserRequest request) {
         User user = userMapper.toUser(request);
@@ -64,7 +67,12 @@ public class UserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
+    @Transactional
     public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new EntityNotFoundException("user not found with id: " + userId);
+        }
+        fighterProfileService.deleteFighterProfile(userId);
         userRepository.deleteById(userId);
     }
 }

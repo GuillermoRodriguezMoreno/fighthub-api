@@ -3,6 +3,7 @@ package com.fighthub.fighthubapi.fighter_profile;
 import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.fight.FightRepository;
 import com.fighthub.fighthubapi.user.User;
 import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,6 +36,8 @@ public class FighterProfileService {
     private final FighterProfileRepository fighterProfileRepository;
     private final FighterProfileMapper fighterProfileMapper;
     private final UserRepository userRepository;
+    private final ClubRepository clubRepository;
+    private final FightRepository fightRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -91,10 +94,24 @@ public class FighterProfileService {
     public void deleteFighterProfile(Long fighterProfileId) {
         FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
                 .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
-        fighterProfile.getClubsOwned().forEach(club -> club.setOwner(null));
-        fighterProfile.getBlueCornerFights().forEach(fight -> fight.setBlueCornerFighter(null));
-        fighterProfile.getRedCornerFights().forEach(fight -> fight.setRedCornerFighter(null));
-
+        fighterProfile.getClubsOwned().forEach(club -> {
+            club.setOwner(null);
+            clubRepository.save(club);
+        });
+        fighterProfile.getBlueCornerFights().forEach(fight -> {
+            fight.setBlueCornerFighter(null);
+            if (fight.getWinner() != null && fight.getWinner().getId().equals(fighterProfile.getId())) {
+                fight.setWinner(null);
+            }
+            fightRepository.save(fight);
+        });
+        fighterProfile.getRedCornerFights().forEach(fight -> {
+            fight.setRedCornerFighter(null);
+            if (fight.getWinner() != null && fight.getWinner().getId().equals(fighterProfile.getId())) {
+                fight.setWinner(null);
+            }
+            fightRepository.save(fight);
+        });
         User user = userRepository.findById(fighterProfile.getUser().getId())
                 .orElseThrow(() -> new EntityNotFoundException("user not found with id: " + fighterProfile.getUser().getId()));
 
