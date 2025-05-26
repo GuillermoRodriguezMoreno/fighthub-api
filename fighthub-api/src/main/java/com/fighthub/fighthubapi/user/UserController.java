@@ -49,7 +49,7 @@ public class UserController {
     public ResponseEntity<String> deleteUser(
             @PathVariable("user-id") Long userId
     ) {
-        userService.deleteUser(userId);
-        return ResponseEntity.ok("user with id:" + userId + " deleted");
+        Long deletedId = userService.deleteUser(userId);
+        return ResponseEntity.ok("user with id:" + deletedId + " deleted");
     }
 }

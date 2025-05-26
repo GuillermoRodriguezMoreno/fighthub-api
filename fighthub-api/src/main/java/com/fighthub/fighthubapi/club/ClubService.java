@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -73,10 +74,10 @@ public class ClubService {
         clubRepository.deleteById(clubId);
     }
 
-    public ClubResponse findClubByOwnerId(Long ownerId) {
-        return clubRepository.findByOwnerId(ownerId)
+    public List<ClubResponse> findClubsByOwnerId(Long ownerId) {
+        return clubRepository.findAllByOwnerId(ownerId).stream()
                 .map(clubMapper::toClubResponse)
-                .orElseThrow(() -> new EntityNotFoundException("club not found with owner id: " + ownerId));
+                .collect(Collectors.toList());
     }
 
     public PageResponse<ClubResponse> findClubsOrderByMembersSize(Integer page, Integer size) {

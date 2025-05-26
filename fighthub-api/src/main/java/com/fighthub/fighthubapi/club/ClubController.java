@@ -1,15 +1,14 @@
 package com.fighthub.fighthubapi.club;
 
 import com.fighthub.fighthubapi.common.PageResponse;
-import com.fighthub.fighthubapi.club.ClubRequest;
-import com.fighthub.fighthubapi.club.ClubResponse;
-import com.fighthub.fighthubapi.club.ClubService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,10 +55,10 @@ public class ClubController {
     }
 
     @GetMapping("/owner/{owner-id}")
-    public ResponseEntity<ClubResponse> findClubsByOwner(
+    public ResponseEntity<List<ClubResponse>> findClubsByOwner(
             @PathVariable("owner-id") Long ownerId
     ) {
-        return ResponseEntity.ok(clubService.findClubByOwnerId(ownerId));
+        return ResponseEntity.ok(clubService.findClubsByOwnerId(ownerId));
     }
 
     @GetMapping("/popular")

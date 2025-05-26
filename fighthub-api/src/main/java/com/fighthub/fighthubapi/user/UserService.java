@@ -91,12 +91,13 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(Long userId) {
+    public Long deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new EntityNotFoundException("user not found with id: " + userId);
         }
         fighterProfileService.deleteFighterProfile(userId);
         tokenRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
+        return userId;
     }
 }
