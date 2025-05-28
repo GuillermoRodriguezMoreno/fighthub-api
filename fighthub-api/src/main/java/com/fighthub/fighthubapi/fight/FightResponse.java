@@ -1,15 +1,7 @@
 package com.fighthub.fighthubapi.fight;
 
-import com.fighthub.fighthubapi.category.Category;
-import com.fighthub.fighthubapi.category.CategoryResponse;
-import com.fighthub.fighthubapi.event.Event;
-import com.fighthub.fighthubapi.event.EventResponse;
-import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
-import com.fighthub.fighthubapi.fighter_profile.FighterProfileResponse;
-import com.fighthub.fighthubapi.style.Style;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,7 +12,7 @@ import java.time.LocalDateTime;
 public class FightResponse {
     private Long id;
     private Integer fightOrder;
-    private LocalDate fightDate;
+    private LocalDateTime fightDate;
     private boolean isTitleFight;
     private boolean isClosed;
     private boolean isKo;

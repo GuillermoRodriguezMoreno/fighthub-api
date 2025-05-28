@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record EventRequest(
         Long id,
@@ -23,10 +23,10 @@ public record EventRequest(
         String address,
         @NotNull(message = "Date of birth is required")
         @Past(message = "Date of birth must be a date in the past")
-        LocalDate startDate,
+        LocalDateTime startDate,
         @NotNull(message = "Date of birth is required")
         @Past(message = "Date of birth must be a date in the past")
-        LocalDate endDate,
+        LocalDateTime endDate,
         @NotNull(message = "100")
         Club organizer
 ) {}
