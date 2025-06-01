@@ -1,10 +1,8 @@
 package com.fighthub.fighthubapi.event;
 
 import com.fighthub.fighthubapi.club.Club;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 
 public record EventRequest(
@@ -21,11 +19,11 @@ public record EventRequest(
         @NotEmpty(message = "100")
         @NotBlank(message = "100")
         String address,
-        @NotNull(message = "Date of birth is required")
-        @Past(message = "Date of birth must be a date in the past")
+        @NotNull(message = "Start date is required")
+        @FutureOrPresent(message = "Start date must be a date in the future")
         LocalDateTime startDate,
-        @NotNull(message = "Date of birth is required")
-        @Past(message = "Date of birth must be a date in the past")
+        @NotNull(message = "End date is required")
+        @FutureOrPresent(message = "End date must be a date in the future")
         LocalDateTime endDate,
         @NotNull(message = "100")
         Club organizer

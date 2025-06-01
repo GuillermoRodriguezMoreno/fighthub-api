@@ -1,4 +1,5 @@
 spring:
+  #db.srhjieykuiezyiisnvgl.supabase.co
   datasource:
     url: jdbc:postgresql://localhost:5433/fighthub
     username: admin
@@ -33,7 +34,7 @@ application:
   security:
     jwt:
       secret-key: LmtC4QHX8ZP3Lgf8KvLXG3ZsDbYxFPXqftCvcBDV1a8=
-      expiration: 8640000
+      expiration: 604800000
   email:
     from: "admin@fighthub.com"
     activation-url: "http://localhost:8080/api/v1/auth/activate-account"
