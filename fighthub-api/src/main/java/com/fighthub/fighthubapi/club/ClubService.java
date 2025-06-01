@@ -1,11 +1,9 @@
 package com.fighthub.fighthubapi.club;
 
 import com.fighthub.fighthubapi.common.PageResponse;
-import com.fighthub.fighthubapi.club.*;
-import com.fighthub.fighthubapi.event.Event;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfileRepository;
-import com.fighthub.fighthubapi.fighter_profile.FighterProfileService;
+import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +21,7 @@ public class ClubService {
 
     private final ClubRepository clubRepository;
     private final FighterProfileRepository fighterProfileRepository;
+    private final UserRepository userRepository;
     private final ClubMapper clubMapper;
 
     public Long saveClub(ClubRequest request) {
@@ -74,7 +73,10 @@ public class ClubService {
         clubRepository.deleteById(clubId);
     }
 
-    public List<ClubResponse> findClubsByOwnerId(Long ownerId) {
+    public List<ClubResponse> findClubsByOwnerId(String ownerEmail) {
+        Long ownerId = userRepository.findByEmail(ownerEmail)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with email: " + ownerEmail))
+                .getId();
         return clubRepository.findAllByOwnerId(ownerId).stream()
                 .map(clubMapper::toClubResponse)
                 .collect(Collectors.toList());

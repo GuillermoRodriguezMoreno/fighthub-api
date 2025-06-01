@@ -54,11 +54,11 @@ public class ClubController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/owner/{owner-id}")
+    @GetMapping("/owner/{owner-email}")
     public ResponseEntity<List<ClubResponse>> findClubsByOwner(
-            @PathVariable("owner-id") Long ownerId
+            @PathVariable("owner-email") String ownerEmail
     ) {
-        return ResponseEntity.ok(clubService.findClubsByOwnerId(ownerId));
+        return ResponseEntity.ok(clubService.findClubsByOwnerId(ownerEmail));
     }
 
     @GetMapping("/popular")

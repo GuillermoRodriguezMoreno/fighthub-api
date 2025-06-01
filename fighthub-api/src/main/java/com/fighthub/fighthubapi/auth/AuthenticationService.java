@@ -113,6 +113,9 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .email(user.getEmail())
                 .username(user.getNickname())
+                .roles(user.getRoles().stream()
+                        .map(Role::getName)
+                        .toList())
                 .build();
     }
 
