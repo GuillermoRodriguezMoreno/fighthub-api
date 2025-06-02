@@ -1,10 +1,10 @@
-INSERT INTO "_user" (id, username, email, password, is_account_locked, is_account_enabled, created_at)
-VALUES (1, 'johndoe', 'johndoe@example.com', 'hashedpassword1', false, true, NOW()),
-       (2, 'mikesmith', 'mikesmith@example.com', 'hashedpassword2', false, true, NOW()),
-       (3, 'carlossanchez', 'carlossanchez@example.com', 'hashedpassword3', false, true, NOW()),
-       (4, 'luisgomez', 'luisgomez@example.com', 'hashedpassword4', false, true, NOW()),
-       (5, 'emilybrown', 'emilybrown@example.com', 'hashedpassword5', false, true, NOW()),
-       (6, 'peterwhite', 'peterwhite@example.com', 'hashedpassword6', false, true, NOW());
+INSERT INTO "_user" (id, username, email, password, is_account_locked, is_account_enabled, created_at, created_by, last_updated_by)
+VALUES (1, 'johndoe', 'johndoe@example.com', 'hashedpassword1', false, true, NOW(), 'admin', 'admin'),
+       (2, 'mikesmith', 'mikesmith@example.com', 'hashedpassword2', false, true, NOW(), 'admin', 'admin'),
+       (3, 'carlossanchez', 'carlossanchez@example.com', 'hashedpassword3', false, true, NOW(), 'admin', 'admin'),
+       (4, 'luisgomez', 'luisgomez@example.com', 'hashedpassword4', false, true, NOW(), 'admin', 'admin'),
+       (5, 'emilybrown', 'emilybrown@example.com', 'hashedpassword5', false, true, NOW(), 'admin', 'admin'),
+       (6, 'peterwhite', 'peterwhite@example.com', 'hashedpassword6', false, true, NOW(), 'admin', 'admin');
 
 INSERT INTO category (id, name, created_at, created_by)
 VALUES (1, 'Amateur', NOW(), 'admin'),

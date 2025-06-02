@@ -33,6 +33,8 @@ public class UserMapper {
                 .updatedAt(Optional.ofNullable(user.getUpdatedAt())
                         .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                         .orElse(null))
+                .createdBy(user.getCreatedBy())
+                .lastUpdatedBy(user.getLastUpdatedBy())
                 .roles(user.getRoles().stream().map(Role::getName).collect(Collectors.toSet()))
                 .build();
     }

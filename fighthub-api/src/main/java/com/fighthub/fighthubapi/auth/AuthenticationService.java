@@ -7,12 +7,8 @@ import com.fighthub.fighthubapi.fighter_profile.FighterProfileRepository;
 import com.fighthub.fighthubapi.role.Role;
 import com.fighthub.fighthubapi.role.RoleRepository;
 import com.fighthub.fighthubapi.security.JwtService;
-import com.fighthub.fighthubapi.user.Token;
-import com.fighthub.fighthubapi.user.TokenRepository;
-import com.fighthub.fighthubapi.user.User;
-import com.fighthub.fighthubapi.user.UserRepository;
+import com.fighthub.fighthubapi.user.*;
 import jakarta.mail.MessagingException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,8 +37,8 @@ public class AuthenticationService {
     @Value("${application.email.activation-url}")
     private String activationUrl;
 
-    public void register(ResgistrationRequest request) throws MessagingException {
-        Role userRole = roleRepository.findByName("USER")
+    public UserResponse register(ResgistrationRequest request) throws MessagingException {
+        Role userRole = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new IllegalStateException("Role not found"));
 
         User user = User.builder()
@@ -61,6 +57,12 @@ public class AuthenticationService {
                 .build();
         fighterProfileRepository.save(newUserProfile);
         sendValidationEmail(user);
+        UserResponse userResponse = UserResponse.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
+        return userResponse;
     }
 
     public void sendValidationEmail(User user) throws MessagingException {

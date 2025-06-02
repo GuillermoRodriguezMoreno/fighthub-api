@@ -4,7 +4,9 @@ import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,6 +44,12 @@ public class User implements UserDetails, Principal {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private FighterProfile fighterProfile;
 
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdBy;
+    @LastModifiedBy
+    @Column(updatable = false)
+    private String lastUpdatedBy;
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

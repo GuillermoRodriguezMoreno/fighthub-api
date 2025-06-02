@@ -17,5 +17,7 @@ public class UserResponse {
     private boolean isAccountEnabled;
     private String createdAt;
     private String updatedAt;
+    private String createdBy;
+    private String lastUpdatedBy;
     private Set<String> roles;
 }

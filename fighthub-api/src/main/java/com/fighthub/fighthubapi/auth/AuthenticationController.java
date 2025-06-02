@@ -1,5 +1,6 @@
 package com.fighthub.fighthubapi.auth;
 
+import com.fighthub.fighthubapi.user.UserResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -17,10 +18,8 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<?> register(@RequestBody @Valid ResgistrationRequest request) throws MessagingException {
-        authenticationService.register(request);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserResponse> register(@RequestBody @Valid ResgistrationRequest request) throws MessagingException {
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/authenticate")
