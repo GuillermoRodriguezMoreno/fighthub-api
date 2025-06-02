@@ -54,12 +54,12 @@ public class EventController {
 
     @GetMapping("organizer/{organizer-id}")
     public ResponseEntity<PageResponse<EventResponse>> findEventsByOrganizer(
-            @PathVariable("organizer-id") Long organizerId,
+            @PathVariable("organizer-id") String organizerMail,
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "startDate", required = false) String orderBy
     ) {
-        return ResponseEntity.ok(eventService.findEventsByOrganizerProfile(organizerId, page, size, orderBy));
+        return ResponseEntity.ok(eventService.findEventsByOrganizerProfile(organizerMail, page, size, orderBy));
     }
 
     @PostMapping("{event_id}/like")

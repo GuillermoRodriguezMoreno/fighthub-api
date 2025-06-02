@@ -3,6 +3,7 @@ package com.fighthub.fighthubapi.event;
 import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final ClubRepository clubRepository;
+    private final UserRepository userRepository;
     private final EventMapper eventMapper;
 
     public Long saveEvent(EventRequest request) {
@@ -67,8 +69,11 @@ public class EventService {
         eventRepository.deleteById(eventId);
     }
 
-    public PageResponse<EventResponse> findEventsByOrganizerProfile(Long organizerId, Integer page, Integer size, String orderBy) {
+    public PageResponse<EventResponse> findEventsByOrganizerProfile(String organizerMail, Integer page, Integer size, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
+        Long organizerId = userRepository.findByEmail(organizerMail)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with email: " + organizerMail))
+                .getId();
         Page<Event> events = eventRepository.findAllByOrganizerProfileId(organizerId ,pageable);
         List<EventResponse> eventResponse = events.stream()
                 .map(eventMapper::toEventResponse)
