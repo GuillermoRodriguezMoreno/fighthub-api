@@ -93,7 +93,7 @@ VALUES (1, 1, 1, NULL, 2, 2, NULL, false, false, false, false, 70.5, 3, 5, NULL,
        (7, 4, 6, 2, 1, 1, 4, true, true, false, false, 80.0, 5, 3, 80, 6, NOW(), 'admin');
 
 INSERT INTO role (id, name, created_at)
-VALUES (2, 'ADMIN', NOW());
+VALUES (2, 'ROLE_ADMIN', NOW());
 
 INSERT INTO _user_roles (users_id, roles_id)
 VALUES (1, 1),
