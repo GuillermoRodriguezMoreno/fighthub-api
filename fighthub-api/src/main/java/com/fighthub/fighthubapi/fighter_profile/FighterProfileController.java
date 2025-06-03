@@ -50,7 +50,7 @@ public class FighterProfileController {
     @GetMapping
     public ResponseEntity<PageResponse<FighterProfileResponse>> findAllFighterProfiles(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "firstname", required = false) String orderBy
     ){
         return ResponseEntity.ok(fighterProfileService.findAllFighterProfiles(page, size, orderBy));
@@ -74,7 +74,7 @@ public class FighterProfileController {
     public ResponseEntity<PageResponse<FighterProfileResponse>> findFighterProfilesByClub(
             @PathVariable("club-id") Long clubId,
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "firstname", required = false) String orderBy
     ) {
         return ResponseEntity.ok(fighterProfileService.findAllFighterProfilesByClubId(clubId, page, size, orderBy));

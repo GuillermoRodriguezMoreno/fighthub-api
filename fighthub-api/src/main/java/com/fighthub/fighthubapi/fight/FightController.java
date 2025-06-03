@@ -32,7 +32,7 @@ public class FightController {
     @GetMapping
     public ResponseEntity<PageResponse<FightResponse>> findAllFights(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "event.startDate", required = false) String orderBy
     ){
         return ResponseEntity.ok(fightservice.findAllFights(page, size, orderBy));
@@ -56,7 +56,7 @@ public class FightController {
     public ResponseEntity<PageResponse<FightResponse>> findFightsByFighter(
             @PathVariable("fighter-id") Long fighterId,
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "event.startDate", required = false) String orderBy
     ) {
         return ResponseEntity.ok(fightservice.findFightsByFighterId(fighterId, page, size, orderBy));
@@ -66,7 +66,7 @@ public class FightController {
     public ResponseEntity<PageResponse<FightResponse>> findFightsByEvent(
             @PathVariable("event-id") Long eventId,
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "fightOrder", required = false) String orderBy
     ) {
         return ResponseEntity.ok(fightservice.findFightsByEventId(eventId, page, size, orderBy));
@@ -75,7 +75,7 @@ public class FightController {
     @GetMapping("/popular")
     public ResponseEntity<PageResponse<FightResponse>> findPopularFights(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size
     ) {
         return ResponseEntity.ok(fightservice.findFightsPopular(page, size));
     }

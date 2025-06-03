@@ -34,7 +34,7 @@ public class ClubController {
     @GetMapping
     public ResponseEntity<PageResponse<ClubResponse>> findAllClubs(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "name" ,required = false) String orderBy
     ){
         return ResponseEntity.ok(clubService.findAllClubs(page, size, orderBy));
@@ -64,7 +64,7 @@ public class ClubController {
     @GetMapping("/popular")
     public ResponseEntity<PageResponse<ClubResponse>> findPopularClubs(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size
+            @RequestParam(name = "size", defaultValue = "50", required = false) Integer size
     ) {
         return ResponseEntity.ok(clubService.findClubsOrderByMembersSize(page, size));
     }
