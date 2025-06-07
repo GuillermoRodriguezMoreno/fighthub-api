@@ -1,10 +1,8 @@
 spring:
-  #jdbc:postgresql://aws-0-eu-west-2.pooler.supabase.com:6543/postgres
-  #jdbc:postgresql://localhost:5433/fighthub
   datasource:
-    url: jdbc:postgresql://localhost:5433/fighthub
-    username: admin
-    password: admin
+    url: jdbc:postgresql://aws-0-eu-west-2.pooler.supabase.com:6543/postgres?
+    username: postgres.srhjieykuiezyiisnvgl
+    password: 79039350Bb+
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
