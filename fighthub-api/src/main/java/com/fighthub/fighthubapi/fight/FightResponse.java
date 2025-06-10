@@ -31,6 +31,8 @@ public class FightResponse {
     private String redCornerFighterClub;
     private Long eventId;
     private String eventName;
-    private String category;
-    private String style;
+    private String categoryName;
+    private Long categoryId;
+    private String styleName;
+    private Long styleId;
 }

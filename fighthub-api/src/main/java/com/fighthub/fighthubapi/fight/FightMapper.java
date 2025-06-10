@@ -102,14 +102,24 @@ public class FightMapper {
                                 .map(Event::getName)
                                 .orElse(null)
                 )
-                .category(
+                .categoryName(
                         Optional.ofNullable(fight.getCategory())
                                 .map(Category::getName)
                                 .orElse(null)
                 )
-                .style(
+                .categoryId(
+                        Optional.ofNullable(fight.getCategory())
+                                .map(Category::getId)
+                                .orElse(null)
+                )
+                .styleName(
                         Optional.ofNullable(fight.getStyle())
                                 .map(Style::getName)
+                                .orElse(null)
+                )
+                .styleId(
+                        Optional.ofNullable(fight.getStyle())
+                                .map(Style::getId)
                                 .orElse(null)
                 )
                 .build();

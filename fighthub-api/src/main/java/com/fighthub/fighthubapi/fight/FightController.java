@@ -45,11 +45,11 @@ public class FightController {
         return ResponseEntity.ok(fightservice.updateFight(fightId, request));
     }
     @DeleteMapping("{fight-id}")
-    public ResponseEntity<Void> deleteFight(
+    public ResponseEntity<String> deleteFight(
             @PathVariable("fight-id") Long fightId
     ) {
         fightservice.deleteFight(fightId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Fight with id: " + fightId + " deleted");
     }
 
     @GetMapping("/fighter/{fighter-id}")
