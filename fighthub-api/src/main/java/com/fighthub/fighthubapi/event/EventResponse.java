@@ -21,4 +21,5 @@ public class EventResponse {
     private String organizerAddress;
     private String organizerEmail;
     private String organizerPhone;
+    private String createdBy;
 }

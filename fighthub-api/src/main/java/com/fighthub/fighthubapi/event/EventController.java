@@ -45,11 +45,11 @@ public class EventController {
         return ResponseEntity.ok(eventService.updateEvent(eventId, request));
     }
     @DeleteMapping("{event-id}")
-    public ResponseEntity<Void> deleteEvent(
+    public ResponseEntity<String> deleteEvent(
             @PathVariable("event-id") Long eventId
     ) {
         eventService.deleteEvent(eventId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Event with id: " + eventId + " deleted");
     }
 
     @GetMapping("organizer/{organizer-id}")
@@ -59,7 +59,8 @@ public class EventController {
             @RequestParam(name = "size", defaultValue = "50", required = false) Integer size,
             @RequestParam(name = "orderBy", defaultValue = "startDate", required = false) String orderBy
     ) {
-        return ResponseEntity.ok(eventService.findEventsByOrganizerProfile(organizerMail, page, size, orderBy));
+        PageResponse<EventResponse> response = eventService.findEventsByOrganizer(organizerMail, page, size, orderBy);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("{event_id}/like")

@@ -52,6 +52,9 @@ public class EventMapper {
                                 .map(Club::getPhone)
                                 .orElse(null)
                 )
+                .createdBy(
+                        event.getCreatedBy()
+                )
                 .build();
     }
 }

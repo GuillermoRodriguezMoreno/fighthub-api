@@ -69,12 +69,12 @@ public class EventService {
         eventRepository.deleteById(eventId);
     }
 
-    public PageResponse<EventResponse> findEventsByOrganizerProfile(String organizerMail, Integer page, Integer size, String orderBy) {
+    public PageResponse<EventResponse> findEventsByOrganizer(String organizerMail, Integer page, Integer size, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy).descending());
         Long organizerId = userRepository.findByEmail(organizerMail)
                 .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with email: " + organizerMail))
                 .getId();
-        Page<Event> events = eventRepository.findAllByOrganizerProfileId(organizerId ,pageable);
+        Page<Event> events = eventRepository.findAllByOrganizerId(organizerId ,pageable);
         List<EventResponse> eventResponse = events.stream()
                 .map(eventMapper::toEventResponse)
                 .toList();

@@ -13,6 +13,9 @@ public class AuthenticationResponse {
 
     private String token;
     private String email;
+    private boolean isAccountEnabled;
+    private boolean isAccountLocked;
+    private Long userId;
     private String username;
     private List<String> roles;
 }
