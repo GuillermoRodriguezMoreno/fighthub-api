@@ -156,6 +156,13 @@ public class FighterProfileService {
         return fighterProfileResponses;
     }
 
+    public List<FighterProfileResponse> findMembersOfOwnedClubs(Long ownerId) {
+        List<FighterProfile> fighterProfiles = fighterProfileRepository.findMembersOfOwnedClubs(ownerId);
+        return fighterProfiles.stream()
+                .map(fighterProfileMapper::toFighterProfileResponse)
+                .toList();
+    }
+
     public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size, String orderBy) {
         Sort sort = orderBy.equals("firstname") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);

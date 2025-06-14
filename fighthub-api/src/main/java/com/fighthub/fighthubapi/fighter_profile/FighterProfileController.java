@@ -100,6 +100,13 @@ public class FighterProfileController {
         return ResponseEntity.ok(fighterProfileService.findAllFighterProfilesByClubId(clubId, page, size, orderBy));
     }
 
+    @GetMapping("/my-fighters/{owner-id}")
+    public ResponseEntity<List<FighterProfileResponse>> findMyFighters(
+            @PathVariable("owner-id") Long ownerId
+    ) {
+        return ResponseEntity.ok(fighterProfileService.findMembersOfOwnedClubs(ownerId));
+    }
+
     @GetMapping("/{fighter_id}/nearest")
     public ResponseEntity<Set<FighterProfileResponse>> findNearestFighterProfiles(
             @PathVariable("fighter_id") Long fighterId,
