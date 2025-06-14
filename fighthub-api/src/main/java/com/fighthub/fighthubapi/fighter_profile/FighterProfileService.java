@@ -122,6 +122,17 @@ public class FighterProfileService {
         fighterProfileRepository.deleteById(fighterProfileId);
     }
 
+    public FighterProfileResponse unsubscribeFromClub(Long fighterProfileId, Long clubId) {
+        FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
+        if (fighterProfile.getClub() != null && fighterProfile.getClub().getId().equals(clubId)) {
+            fighterProfile.setClub(null);
+            return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));
+        } else {
+            throw new IllegalStateException("Fighter is not subscribed to this club");
+        }
+    }
+
     public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size, String orderBy) {
         Sort sort = orderBy.equals("firstname") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);

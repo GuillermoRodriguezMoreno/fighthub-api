@@ -29,7 +29,6 @@ import java.util.Set;
 public class FighterProfileController {
 
     private final FighterProfileService fighterProfileService;
-    private final FighterProfileRepository fighterProfileRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -68,6 +67,15 @@ public class FighterProfileController {
     ) {
         fighterProfileService.deleteFighterProfile(fighterProfileId);
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("{fighter-profile-id}/unsubscribe-club/{club-id}")
+    public ResponseEntity<FighterProfileResponse> unsubscribeFighterProfileFromClub(
+            @PathVariable("fighter-profile-id") Long fighterProfileId,
+            @PathVariable("club-id") Long clubId
+    ) {
+
+        return ResponseEntity.ok(fighterProfileService.unsubscribeFromClub(fighterProfileId, clubId));
     }
 
     @GetMapping("/club/{club-id}")

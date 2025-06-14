@@ -24,8 +24,8 @@ public record ClubRequest(
         @NotNull(message = "Phone is required")
         @NotEmpty(message = "Phone is required")
         @NotBlank(message = "Phone is required")
-        @Size(min = 9, message = "Phone number must be at least 10 characters")
+        @Size(min = 9, message = "Phone number must be at least 9 characters")
         String phone,
-        @NotNull(message = "100")
+        @NotNull(message = "owner is required")
         FighterProfile owner
 ) {}
