@@ -65,6 +65,19 @@ public class ClubService {
 
         return clubMapper.toClubResponse(clubRepository.save(club));
     }
+
+    public void addFighterProfileToClub(Long clubId, Long fighterProfileId) {
+        Club club = clubRepository.findById(clubId)
+                .orElseThrow(() -> new EntityNotFoundException("club not found with id: " + clubId));
+        FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
+        if (fighterProfile.getClub() != null) {
+            throw new IllegalStateException("Fighter profile already belongs to a club");
+        }
+        fighterProfile.setClub(club);
+        fighterProfileRepository.save(fighterProfile);
+    }
+
     public void deleteClub(Long clubId) {
         Club club = clubRepository.findById(clubId)
                 .orElseThrow(() -> new EntityNotFoundException("club not found with id: " + clubId));

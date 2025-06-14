@@ -1,6 +1,5 @@
 package com.fighthub.fighthubapi.fighter_profile;
 
-import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
 import com.fighthub.fighthubapi.fight.FightRepository;
@@ -131,6 +130,30 @@ public class FighterProfileService {
         } else {
             throw new IllegalStateException("Fighter is not subscribed to this club");
         }
+    }
+
+    public List<FighterProfileResponse> findByName(String query) {
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
+        String searchQuery = query.toLowerCase();
+        List<FighterProfile> fighterProfiles = fighterProfileRepository.findByFirstnameContainingIgnoreCase(searchQuery);
+        List<FighterProfileResponse> fighterProfileResponses = fighterProfiles.stream()
+                .map(fighterProfileMapper::toFighterProfileResponse)
+                .toList();
+        return fighterProfileResponses;
+    }
+
+    public List<FighterProfileResponse> findByNameAndClubIsNull(String query) {
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
+        String searchQuery = query.toLowerCase();
+        List<FighterProfile> fighterProfiles = fighterProfileRepository.findByFirstnameContainingIgnoreCaseAndClubIdIsNull(searchQuery);
+        List<FighterProfileResponse> fighterProfileResponses = fighterProfiles.stream()
+                .map(fighterProfileMapper::toFighterProfileResponse)
+                .toList();
+        return fighterProfileResponses;
     }
 
     public PageResponse<FighterProfileResponse> findAllFighterProfilesByClubId(Long clubId, Integer page, Integer size, String orderBy) {

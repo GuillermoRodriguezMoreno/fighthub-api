@@ -46,6 +46,16 @@ public class ClubController {
     ) {
         return ResponseEntity.ok(clubService.updateClub(clubId, request));
     }
+
+    @PostMapping("{club-id}/join")
+    public ResponseEntity<String> joinClub(
+            @PathVariable("club-id") Long clubId,
+            @RequestBody Long fighterId
+    ) {
+        clubService.addFighterProfileToClub(clubId, fighterId);
+        return ResponseEntity.ok("Fighter with id: " + fighterId + " joined club with id: " + clubId);
+    }
+
     @DeleteMapping("{club-id}")
     public ResponseEntity<Void> deleteClub(
             @PathVariable("club-id") Long clubId

@@ -2,7 +2,6 @@ package com.fighthub.fighthubapi.fighter_profile;
 
 import com.fighthub.fighthubapi.common.PageResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,11 +14,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -76,6 +74,20 @@ public class FighterProfileController {
     ) {
 
         return ResponseEntity.ok(fighterProfileService.unsubscribeFromClub(fighterProfileId, clubId));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FighterProfileResponse>> findByName(
+            @RequestParam(name = "name", required = false) String name){
+        List<FighterProfileResponse> fighterProfiles = fighterProfileService.findByName(name);
+        return ResponseEntity.ok(fighterProfiles);
+    }
+
+    @GetMapping("/search-no-club")
+    public ResponseEntity<List<FighterProfileResponse>> findByNameAndClubIsNull(
+            @RequestParam(name = "name", required = false) String name){
+        List<FighterProfileResponse> fighterProfiles = fighterProfileService.findByNameAndClubIsNull(name);
+        return ResponseEntity.ok(fighterProfiles);
     }
 
     @GetMapping("/club/{club-id}")
