@@ -1,12 +1,11 @@
 package com.fighthub.fighthubapi.config;
 
-import jakarta.servlet.MultipartConfigElement;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,10 +13,10 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.unit.DataSize;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -75,5 +74,15 @@ public class BeansConfig {
         ));
         source.registerCorsConfiguration("/**", config); // Global for all paths
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public WebClient openAiWebClient() {
+        String apiKey = "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";
+        return WebClient.builder()
+                .baseUrl("https://api.openai.com/v1")
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
     }
 }
