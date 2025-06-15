@@ -73,7 +73,7 @@ public class FighterProfile {
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "fighter_profile_styles",
             joinColumns = @JoinColumn(name = "fighters_id"),
