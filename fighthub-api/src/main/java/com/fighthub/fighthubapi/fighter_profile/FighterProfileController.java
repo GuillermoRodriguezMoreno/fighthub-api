@@ -1,6 +1,7 @@
 package com.fighthub.fighthubapi.fighter_profile;
 
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.location.Location;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -127,6 +128,14 @@ public class FighterProfileController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    @PatchMapping("/{fighter_id}/update-location")
+    public ResponseEntity<FighterProfileResponse> updateFighterLocation(
+            @PathVariable("fighter_id") Long fighterId,
+            @Valid @RequestBody Location location
+    ) {
+        return ResponseEntity.ok(fighterProfileService.updateFighterLocation(fighterId, location));
     }
 
     // TODO: Implement this

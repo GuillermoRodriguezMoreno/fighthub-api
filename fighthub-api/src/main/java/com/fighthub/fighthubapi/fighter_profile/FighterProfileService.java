@@ -3,6 +3,7 @@ package com.fighthub.fighthubapi.fighter_profile;
 import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
 import com.fighthub.fighthubapi.fight.FightRepository;
+import com.fighthub.fighthubapi.location.Location;
 import com.fighthub.fighthubapi.picture.SupabaseStorageService;
 import com.fighthub.fighthubapi.user.User;
 import com.fighthub.fighthubapi.user.UserRepository;
@@ -205,6 +206,13 @@ public class FighterProfileService {
         String pictureUrl = supabaseStorageService.upload(file, "fighters").block();
         fighterProfile.setProfilePicture(pictureUrl);
 
+        return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));
+    }
+
+    public FighterProfileResponse updateFighterLocation(Long fighterProfileId, Location location) {
+        FighterProfile fighterProfile = fighterProfileRepository.findById(fighterProfileId)
+                .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + fighterProfileId));
+        fighterProfile.setLocation(location);
         return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));
     }
 }
