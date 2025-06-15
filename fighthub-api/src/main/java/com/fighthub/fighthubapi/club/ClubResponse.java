@@ -17,8 +17,10 @@ public class ClubResponse {
     private String email;
     private String description;
     private String phone;
+    private String profilePicture;
     private Long ownerId;
     private String ownerName;
     private String ownerUsername;
     private String ownerEmail;
+    private String ownerProfilePicture;
 }

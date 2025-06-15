@@ -1,12 +1,15 @@
 package com.fighthub.fighthubapi.event;
 
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfileResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -61,6 +64,19 @@ public class EventController {
     ) {
         PageResponse<EventResponse> response = eventService.findEventsByOrganizer(organizerMail, page, size, orderBy);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{event_id}/profile-picture")
+    public ResponseEntity<EventResponse> updateProfilePicture(
+            @PathVariable("event_id") Long eventId,
+            @RequestParam("file") MultipartFile file
+    ) {
+        try {
+            EventResponse updatedProfile = eventService.uploadProfilePicture(eventId, file);
+            return ResponseEntity.ok(updatedProfile);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PostMapping("{event_id}/like")

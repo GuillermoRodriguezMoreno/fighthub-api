@@ -22,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+// TODO: Implement this
 public class Picture extends BaseEntity {
     private String url;
 

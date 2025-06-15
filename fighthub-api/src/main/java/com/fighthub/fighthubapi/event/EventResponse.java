@@ -16,10 +16,12 @@ public class EventResponse {
     private String address;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private String profilePicture;
     private Long organizerId;
     private String organizerName;
     private String organizerAddress;
     private String organizerEmail;
     private String organizerPhone;
+    private String organizerProfilePicture;
     private String createdBy;
 }

@@ -6,6 +6,7 @@ import com.fighthub.fighthubapi.role.RoleResponse;
 import org.springframework.stereotype.Service;
 
 @Service
+// TODO: Implement this
 public class PictureMapper {
 
     public Picture toPicture(PictureRequest request) {

@@ -1,12 +1,15 @@
 package com.fighthub.fighthubapi.club;
 
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.event.EventResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -84,5 +87,18 @@ public class ClubController {
             @PathVariable("fighter-id") Long fighterId
     ) {
         return ResponseEntity.ok(clubService.findClubByFighterProfileId(fighterId));
+    }
+
+    @PatchMapping("/{club_id}/profile-picture")
+    public ResponseEntity<ClubResponse> updateProfilePicture(
+            @PathVariable("club_id") Long clubId,
+            @RequestParam("file") MultipartFile file
+    ) {
+        try {
+            ClubResponse updatedProfile = clubService.uploadProfilePicture(clubId, file);
+            return ResponseEntity.ok(updatedProfile);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }

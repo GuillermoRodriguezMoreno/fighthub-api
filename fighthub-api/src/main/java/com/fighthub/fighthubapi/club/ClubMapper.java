@@ -29,6 +29,7 @@ public class ClubMapper {
                 .email(club.getEmail())
                 .description(club.getDescription())
                 .phone(club.getPhone())
+                .profilePicture(club.getProfilePicture())
                 .ownerId(
                         Optional.ofNullable(club.getOwner())
                                 .map(FighterProfile::getId)
@@ -51,7 +52,11 @@ public class ClubMapper {
                                 .map(User::getEmail)
                                 .orElse(null)
                 )
-
+                .ownerProfilePicture(
+                        Optional.ofNullable(club.getOwner())
+                                .map(FighterProfile::getProfilePicture)
+                                .orElse(null)
+                )
                 .build();
     }
 }

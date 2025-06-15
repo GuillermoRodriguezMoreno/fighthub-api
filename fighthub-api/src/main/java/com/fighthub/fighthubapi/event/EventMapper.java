@@ -27,6 +27,7 @@ public class EventMapper {
                 .address(event.getAddress())
                 .startDate(event.getStartDate())
                 .endDate(event.getEndDate())
+                .profilePicture(event.getProfilePicture())
                 .organizerId(
                         Optional.ofNullable(event.getOrganizer())
                                 .map(Club::getId)
@@ -50,6 +51,11 @@ public class EventMapper {
                 .organizerPhone(
                         Optional.ofNullable(event.getOrganizer())
                                 .map(Club::getPhone)
+                                .orElse(null)
+                )
+                .organizerProfilePicture(
+                        Optional.ofNullable(event.getOrganizer())
+                                .map(Club::getProfilePicture)
                                 .orElse(null)
                 )
                 .createdBy(

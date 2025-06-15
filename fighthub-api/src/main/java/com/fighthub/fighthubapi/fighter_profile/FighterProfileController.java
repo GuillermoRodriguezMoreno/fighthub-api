@@ -28,6 +28,7 @@ public class FighterProfileController {
 
     private final FighterProfileService fighterProfileService;
 
+    // TODO: Implement this
     @Value("${upload.path}")
     private String uploadPath;
 
@@ -115,6 +116,21 @@ public class FighterProfileController {
         return ResponseEntity.ok(fighterProfileService.findAllFighterNearestToLocation(fighterId, radius));
     }
 
+    @PatchMapping("/{fighter_id}/profile-picture")
+    public ResponseEntity<FighterProfileResponse> updateProfilePicture(
+            @PathVariable("fighter_id") Long fighterId,
+            @RequestParam("file") MultipartFile file
+    ) {
+        try {
+            FighterProfileResponse updatedProfile = fighterProfileService.uploadProfilePicture(fighterId, file);
+            return ResponseEntity.ok(updatedProfile);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    // TODO: Implement this
+    /*
     @PostMapping("/{fighter_id}/upload")
     public ResponseEntity<String> uploadProfilePicture(@PathVariable Long fighter_id, @RequestParam("file") MultipartFile file) {
         try {
@@ -125,6 +141,10 @@ public class FighterProfileController {
         }
     }
 
+     */
+
+    // TODO: Implement this
+    /*
     @GetMapping("/profile-picture/{filename}")
     public ResponseEntity<Resource> getProfilePicture(@PathVariable String filename) {
         try {
@@ -142,4 +162,6 @@ public class FighterProfileController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+     */
 }

@@ -3,6 +3,7 @@ package com.fighthub.fighthubapi.fighter_profile;
 import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
 import com.fighthub.fighthubapi.fight.FightRepository;
+import com.fighthub.fighthubapi.picture.SupabaseStorageService;
 import com.fighthub.fighthubapi.user.User;
 import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,9 +39,7 @@ public class FighterProfileService {
     private final UserRepository userRepository;
     private final ClubRepository clubRepository;
     private final FightRepository fightRepository;
-
-    @Value("${upload.path}")
-    private String uploadPath;
+    private final SupabaseStorageService supabaseStorageService;
 
     public Long saveFighterProfile(FighterProfileRequest request) {
         FighterProfile fighterProfile = fighterProfileMapper.toFighterProfile(request);
@@ -194,25 +194,17 @@ public class FighterProfileService {
         return Set.copyOf(fighterProfileResponse);
     }
 
-    public String uploadProfilePicture(Long profileId, MultipartFile file) throws IOException {
+    public FighterProfileResponse uploadProfilePicture(Long profileId, MultipartFile file) throws IOException {
         FighterProfile fighterProfile = fighterProfileRepository.findById(profileId)
                 .orElseThrow(() -> new EntityNotFoundException("fighterProfile not found with id: " + profileId));
 
-        Path uploadPathDestination = Paths.get(uploadPath);
-
-        if (!Files.exists(uploadPathDestination)) {
-            Files.createDirectories(uploadPathDestination);
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty");
         }
 
-        String fileName = fighterProfile.getId() + "_profile_picture_" + file.getOriginalFilename();
-        Path filePath = uploadPathDestination.resolve(fileName);
+        String pictureUrl = supabaseStorageService.upload(file, "fighters").block();
+        fighterProfile.setProfilePicture(pictureUrl);
 
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        fighterProfile.setProfilePicture(fileName);
-
-        fighterProfileRepository.save(fighterProfile);
-
-        return filePath.toString();
+        return fighterProfileMapper.toFighterProfileResponse(fighterProfileRepository.save(fighterProfile));
     }
 }

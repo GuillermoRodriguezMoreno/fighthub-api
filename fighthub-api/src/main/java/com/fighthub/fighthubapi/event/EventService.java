@@ -3,6 +3,9 @@ package com.fighthub.fighthubapi.event;
 import com.fighthub.fighthubapi.club.Club;
 import com.fighthub.fighthubapi.club.ClubRepository;
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
+import com.fighthub.fighthubapi.fighter_profile.FighterProfileResponse;
+import com.fighthub.fighthubapi.picture.SupabaseStorageService;
 import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -21,6 +26,7 @@ public class EventService {
     private final EventRepository eventRepository;
     private final ClubRepository clubRepository;
     private final UserRepository userRepository;
+    private final SupabaseStorageService supabaseStorageService;
     private final EventMapper eventMapper;
 
     public Long saveEvent(EventRequest request) {
@@ -88,6 +94,21 @@ public class EventService {
                 events.isLast());
     }
 
+    public EventResponse uploadProfilePicture(Long eventId, MultipartFile file) throws IOException {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + eventId));
+
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty");
+        }
+
+        String pictureUrl = supabaseStorageService.upload(file, "events").block();
+        event.setProfilePicture(pictureUrl);
+
+        return eventMapper.toEventResponse(eventRepository.save(event));
+    }
+
+    // TODO: Implemment this
     public Event incrementLikes(Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("event not found with id: " + eventId));

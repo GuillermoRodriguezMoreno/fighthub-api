@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+// TODO: Implement this
 public class PictureResponse {
     private long id;
     private long fighterProfileId;

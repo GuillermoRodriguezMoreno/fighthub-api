@@ -28,6 +28,7 @@ public class Event extends BaseEntity {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Long likes;
+    private String profilePicture;
 
     @ManyToOne()
     @JoinColumn(name = "organizer_id")

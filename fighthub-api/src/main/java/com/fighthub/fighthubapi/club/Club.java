@@ -27,6 +27,7 @@ public class Club extends BaseEntity {
     private String email;
     private String description;
     private String phone;
+    private String profilePicture;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")

@@ -49,6 +49,7 @@ public class FighterProfileMapper {
                 .draws(profile.getDraws())
                 .kos(profile.getKos())
                 .winsInARow(profile.getWinsInARow())
+                .profilePicture(profile.getProfilePicture())
                 .location(profile.getLocation())
                 .userId(
                         Optional.ofNullable(profile.getUser())

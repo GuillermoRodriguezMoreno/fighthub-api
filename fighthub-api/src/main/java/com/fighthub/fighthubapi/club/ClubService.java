@@ -1,8 +1,11 @@
 package com.fighthub.fighthubapi.club;
 
 import com.fighthub.fighthubapi.common.PageResponse;
+import com.fighthub.fighthubapi.event.Event;
+import com.fighthub.fighthubapi.event.EventResponse;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfile;
 import com.fighthub.fighthubapi.fighter_profile.FighterProfileRepository;
+import com.fighthub.fighthubapi.picture.SupabaseStorageService;
 import com.fighthub.fighthubapi.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +27,7 @@ public class ClubService {
     private final ClubRepository clubRepository;
     private final FighterProfileRepository fighterProfileRepository;
     private final UserRepository userRepository;
+    private final SupabaseStorageService supabaseStorageService;
     private final ClubMapper clubMapper;
 
     public Long saveClub(ClubRequest request) {
@@ -115,5 +121,19 @@ public class ClubService {
         return clubRepository.findByFighterProfileId(fighterProfileId)
                 .map(clubMapper::toClubResponse)
                 .orElseThrow(() -> new EntityNotFoundException("club not found with fighterProfile id: " + fighterProfileId));
+    }
+
+    public ClubResponse uploadProfilePicture(Long clubId, MultipartFile file) throws IOException {
+        Club club = clubRepository.findById(clubId)
+                .orElseThrow(() -> new EntityNotFoundException("club not found with id: " + clubId));
+
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty");
+        }
+
+        String pictureUrl = supabaseStorageService.upload(file, "clubs").block();
+        club.setProfilePicture(pictureUrl);
+
+        return clubMapper.toClubResponse(clubRepository.save(club));
     }
 }

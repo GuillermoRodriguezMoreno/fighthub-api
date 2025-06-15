@@ -95,6 +95,7 @@ public class FighterProfile {
     @JsonIgnore
     @OneToMany(mappedBy = "redCornerFighter", cascade = CascadeType.MERGE)
     private Set<Fight> redCornerFights = new HashSet<>();
+    // TODO: Implement this
     @JsonIgnore
     @OneToMany(mappedBy = "fighterProfile", cascade = CascadeType.ALL)
     private Set<Picture> pictures = new HashSet<>();

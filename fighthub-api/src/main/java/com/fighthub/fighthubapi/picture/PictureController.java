@@ -18,6 +18,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Tag(name = "Pictures")
 @RequestMapping("/pictures")
+// TODO: Implement this
 public class PictureController {
 
     private final PictureService pictureService;
@@ -80,11 +81,11 @@ public class PictureController {
     }
 
     @PostMapping("/upload")
-    public Mono<ResponseEntity<String>> upload(@RequestPart("file") MultipartFile file) {
-        return storageService.uploadPhoto(file)
+    public Mono<ResponseEntity<String>> upload(@RequestPart("file") MultipartFile file, String folder) {
+        return storageService.upload(file, folder)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(
-                        ResponseEntity.status(500).body("Error subiendo: " + e.getMessage())
+                        ResponseEntity.status(500).body("Error uploading: " + e.getMessage())
                 ));
     }
 }

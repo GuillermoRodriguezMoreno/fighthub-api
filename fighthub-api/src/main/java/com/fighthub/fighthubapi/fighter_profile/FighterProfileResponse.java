@@ -36,6 +36,7 @@ public class FighterProfileResponse {
     private Long userId;
     private String username;
     private String email;
+    private String profilePicture;
     private Set<StyleResponse> styles;
     private CategoryResponse category;
     private ClubResponse club;

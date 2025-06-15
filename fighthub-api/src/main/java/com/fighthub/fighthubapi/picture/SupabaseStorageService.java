@@ -15,22 +15,23 @@ public class SupabaseStorageService {
         this.supabaseBucketWebClient = supabaseBucketWebClient;
     }
 
-    public Mono<String> uploadPhoto(MultipartFile file) {
+    public Mono<String> upload(MultipartFile file, String folder) {
         String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         String bucketName = "fighthub-pictures";
         String supabaseUrl = "https://srhjieykuiezyiisnvgl.supabase.co";
         return supabaseBucketWebClient.post()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/storage/v1/object/{bucket}/{file}")
-                        .build(bucketName, filename))
+                        .path("/storage/v1/object/{bucket}/{folder}/{file}")
+                        .build(bucketName, folder, filename))
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .bodyValue(file.getResource())
                 .retrieve()
                 .toBodilessEntity()
                 .map(response -> {
-                    return String.format("%s/storage/v1/object/public/%s/%s",
+                    return String.format("%s/storage/v1/object/public/%s/%s/%s",
                             supabaseUrl,
                             bucketName,
+                            folder,
                             filename);
                 });
     }
