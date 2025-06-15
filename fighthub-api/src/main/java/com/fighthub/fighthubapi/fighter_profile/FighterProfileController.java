@@ -116,7 +116,7 @@ public class FighterProfileController {
         return ResponseEntity.ok(fighterProfileService.findAllFighterNearestToLocation(fighterId, radius));
     }
 
-    @PatchMapping("/{fighter_id}/profile-picture")
+    @PostMapping("/{fighter_id}/upload-picture")
     public ResponseEntity<FighterProfileResponse> updateProfilePicture(
             @PathVariable("fighter_id") Long fighterId,
             @RequestParam("file") MultipartFile file

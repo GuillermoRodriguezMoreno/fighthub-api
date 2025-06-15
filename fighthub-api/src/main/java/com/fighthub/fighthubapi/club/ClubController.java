@@ -89,7 +89,7 @@ public class ClubController {
         return ResponseEntity.ok(clubService.findClubByFighterProfileId(fighterId));
     }
 
-    @PatchMapping("/{club_id}/profile-picture")
+    @PostMapping("/{club_id}/upload-picture")
     public ResponseEntity<ClubResponse> updateProfilePicture(
             @PathVariable("club_id") Long clubId,
             @RequestParam("file") MultipartFile file

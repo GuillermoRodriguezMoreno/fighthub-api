@@ -66,7 +66,7 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{event_id}/profile-picture")
+    @PostMapping("/{event_id}/upload-picture")
     public ResponseEntity<EventResponse> updateProfilePicture(
             @PathVariable("event_id") Long eventId,
             @RequestParam("file") MultipartFile file
