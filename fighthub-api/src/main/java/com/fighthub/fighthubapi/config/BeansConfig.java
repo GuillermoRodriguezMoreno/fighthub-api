@@ -85,4 +85,15 @@ public class BeansConfig {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
+
+    @Bean
+    public WebClient supabaseBucketWebClient() {
+        String apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyaGppZXlrdWllenlpaXNudmdsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NzI0OTczMiwiZXhwIjoyMDYyODI1NzMyfQ.Y34jgdivnTtx0DJGAmcPxGibEjfqSnq2NTakv77FnIs";
+        String supabaseUrl = "https://srhjieykuiezyiisnvgl.supabase.co";
+        return WebClient.builder()
+                .baseUrl(supabaseUrl)
+                .defaultHeader("apikey", apiKey)
+                .defaultHeader("Authorization", apiKey)
+                .build();
+    }
 }

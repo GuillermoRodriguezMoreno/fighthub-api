@@ -4,18 +4,12 @@ import com.fighthub.fighthubapi.common.PageResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Mono;
 
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +21,7 @@ import java.util.Set;
 public class PictureController {
 
     private final PictureService pictureService;
+    private final SupabaseStorageService storageService;
 
     @PostMapping
     public ResponseEntity<Long> savePicture(
@@ -82,5 +77,14 @@ public class PictureController {
             errorResponse.add(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
+    }
+
+    @PostMapping("/upload")
+    public Mono<ResponseEntity<String>> upload(@RequestPart("file") MultipartFile file) {
+        return storageService.uploadPhoto(file)
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.status(500).body("Error subiendo: " + e.getMessage())
+                ));
     }
 }
