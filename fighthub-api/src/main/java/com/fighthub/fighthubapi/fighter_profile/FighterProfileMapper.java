@@ -39,6 +39,8 @@ public class FighterProfileMapper {
         return FighterProfileResponse.builder()
                 .id(profile.getId())
                 .name(profile.getFullName())
+                .firstname(profile.getFirstname())
+                .lastname(profile.getLastname())
                 .dateOfBirth(profile.getDateOfBirth())
                 .weight(profile.getWeight())
                 .height(profile.getHeight())

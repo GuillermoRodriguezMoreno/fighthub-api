@@ -101,7 +101,10 @@ public class FighterProfile {
     private Set<Picture> pictures = new HashSet<>();
 
     public String getFullName() {
-        return firstname + " " + lastname;
+        if (firstname == null && lastname == null) {
+            return "";
+        }
+        return (firstname + " " + lastname).trim();
     }
 
     public void incrementWinsInARow() {

@@ -17,6 +17,8 @@ import java.util.Set;
 public class FighterProfileResponse {
     private Long id;
     private String name;
+    private String firstname;
+    private String lastname;
     private LocalDate dateOfBirth;
     private double weight;
     private int height;
