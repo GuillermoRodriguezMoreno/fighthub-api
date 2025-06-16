@@ -52,6 +52,10 @@ public class FighterMatchmakingService {
 
     @Transactional
     public List<FighterProfileResponse> getMatchesForFighter(Long fighterId) {
+
+        FighterProfileResponse fighter = fighterProfileRepository.findById(fighterId)
+                .map(fighterProfileMapper::toFighterProfileResponse)
+                .orElseThrow(() -> new NoSuchElementException("Fighter not found with ID: " + fighterId));
         Mono<List<OpponentRank>> opponentRanksMono = rankOpponentsFor(fighterId);
 
         List<FighterProfileResponse> opponentProfiles = opponentRanksMono
@@ -67,6 +71,7 @@ public class FighterMatchmakingService {
                                         .map(profile -> {
                                             FighterProfileResponse response = fighterProfileMapper.toFighterProfileResponse(profile);
                                             response.setAffinity(affinityMap.get(profile.getId()));
+                                            response.setDistanceFromTarget(profile.getLocation().distance(fighter.getLocation()).doubleValue());
                                             return response;
                                         })
                                         .toList();
