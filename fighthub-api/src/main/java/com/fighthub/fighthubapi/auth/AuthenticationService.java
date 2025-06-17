@@ -45,7 +45,7 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .isAccountEnabled(false)
+                .isAccountEnabled(true)
                 .isAccountLocked(false)
                 .roles(Set.of(userRole))
                 .build();
@@ -56,7 +56,7 @@ public class AuthenticationService {
                 .createdBy(user.getEmail())
                 .build();
         fighterProfileRepository.save(newUserProfile);
-        sendValidationEmail(user);
+        //sendValidationEmail(user);
         UserResponse userResponse = UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
