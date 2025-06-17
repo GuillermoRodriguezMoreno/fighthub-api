@@ -15,4 +15,4 @@ USER spring:spring
 
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["sh","-c","java -Dserver.address=0.0.0.0 -Dserver.port=$PORT -jar app.jar"]
