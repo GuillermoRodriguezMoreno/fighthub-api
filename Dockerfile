@@ -1,11 +1,10 @@
 FROM maven:3.9.2-eclipse-temurin-17 AS builder
 WORKDIR /app
 
-COPY pom.xml .
-COPY src ./src
+COPY fighthub-api/pom.xml .
+COPY fighthub-api/src ./src
 RUN mvn -B package -DskipTests
 
-# Stage 2: Runtime
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
