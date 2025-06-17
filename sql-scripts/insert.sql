@@ -6,6 +6,19 @@ VALUES (1, 'johndoe', 'johndoe@example.com', 'hashedpassword1', false, true, NOW
        (5, 'emilybrown', 'emilybrown@example.com', 'hashedpassword5', false, true, NOW(), 'admin', 'admin'),
        (6, 'peterwhite', 'peterwhite@example.com', 'hashedpassword6', false, true, NOW(), 'admin', 'admin');
 
+INSERT INTO role (id, name, created_at)
+VALUES
+       (1, 'ROLE_USER', NOW());
+
+
+INSERT INTO _user_roles (users_id, roles_id)
+VALUES (1, 1),
+       (2, 1),
+       (3, 2),
+       (4, 1),
+       (5, 1),
+       (6, 1);
+
 INSERT INTO category (id, name, created_at, created_by)
 VALUES (1, 'Amateur', NOW(), 'admin'),
        (2, 'Professional', NOW(), 'admin'),
@@ -19,33 +32,45 @@ VALUES (1, 'Boxeo', NOW(), 'admin'),
        (4, 'MMA', NOW(), 'admin');
 
 INSERT INTO fighter_profile (user_id, created_at, created_by, firstname, lastname, date_of_birth, weight, height, gender,
-                             biography, wins, losses, draws, kos, wins_in_a_row, category_id, club_id, latitude, longitude, timestamp)
+                             biography, wins, losses, draws, kos, wins_in_a_row, category_id, club_id, latitude, longitude, timestamp,
+                             profile_picture)
 VALUES (1, NOW(), 'admin', 'John', 'Doe', '1990-05-15', 70.5, 175, 'M',
-        'Peleador profesional con gran experiencia en boxeo.', 10, 2, 1, 5, 3, 1, NULL, 36.8634, -4.1878, NOW()),
+        'Peleador profesional con gran experiencia en boxeo.', 10, 2, 1, 5, 3, 1, NULL, 36.8634, -4.1878, NOW(),
+            'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/fighters/evento5.jpeg'),
        (2, NOW(), 'admin', 'Mike', 'Smith', '1988-08-20', 85.0, 180, 'M',
-        'Especialista en kickboxing y striking rápido.', 15, 3, 2, 8, 5, 2, NULL, 36.7191, -4.4213, NOW()),
+        'Especialista en kickboxing y striking rápido.', 15, 3, 2, 8, 5, 2, NULL, 36.7191, -4.4213, NOW(),
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/fighters/fight5.jpeg'),
        (3, NOW(), 'admin', 'Carlos', 'Sanchez', '1995-02-10', 78.5, 178, 'M',
-        'Luchador con gran dominio del Jiu-Jitsu.', 12, 4, 1, 6, 4, 3, NULL, 36.8754, -4.6920, NOW()),
+        'Luchador con gran dominio del Jiu-Jitsu.', 12, 4, 1, 6, 4, 3, NULL, 36.8754, -4.6920, NOW(),
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/fighters/fighter16.jpg'),
        (4, NOW(), 'admin', 'Luis', 'Gomez', '1992-07-08', 72.0, 176, 'M',
-        'Peleador versátil con base en MMA.', 9, 2, 0, 4, 2, 2, NULL, 36.5475, -4.2558, NOW()),
+        'Peleador versátil con base en MMA.', 9, 2, 0, 4, 2, 2, NULL, 36.5475, -4.2558, NOW(),
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/fighters/fighter17.jpg'),
        (5, NOW(), 'admin', 'Emily', 'Brown', '1998-12-22', 60.5, 165, 'F',
-        'Experta en striking y grappling.', 6, 1, 0, 3, 3, 1, NULL, 36.4847, -4.6986, NOW()),
+        'Experta en striking y grappling.', 6, 1, 0, 3, 3, 1, NULL, 36.4847, -4.6986, NOW(),
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/fighters/fighter27.jpg'),
        (6, NOW(), 'admin', 'Peter', 'White', '1993-04-30', 80.0, 182, 'M',
-        'Dominio total en Jiu-Jitsu y wrestling.', 14, 3, 2, 7, 5, 2, NULL, 36.6772, -4.6726, NOW());
+        'Dominio total en Jiu-Jitsu y wrestling.', 14, 3, 2, 7, 5, 2, NULL, 36.6772, -4.6726, NOW(),
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/fighters/fight5.jpeg');
 
-INSERT INTO club (id, name, address, email, description, phone, owner_id, created_at, created_by)
+INSERT INTO club (id, name, address, email, description, phone, owner_id, created_at, created_by, profile_picture)
 VALUES (1, 'Fight Club NYC', '123 Main St, New York', 'info@fightclubnyc.com', 'Gimnasio de peleas de alto nivel',
-        '555-1234', 1, NOW(), 'admin'),
+        '555-1234', 1, NOW(), 'admin',      'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/clubs/club2.jpg'),
        (2, 'Warriors MMA', '456 Elm St, Los Angeles', 'contact@warriorsmma.com',
-        'Academia de MMA para todos los niveles', '555-5678', 2, NOW(), 'admin'),
+        'Academia de MMA para todos los niveles', '555-5678', 2, NOW(), 'admin',
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/clubs/club5.jpg'),
        (3, 'Gracie Jiu-Jitsu', '789 Oak St, Miami', 'gracie@bjj.com', 'Especialistas en Jiu-Jitsu Brasileño',
-        '555-8765', 3, NOW(), 'admin'),
+        '555-8765', 3, NOW(), 'admin',
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/clubs/club9.jpg'),
        (4, 'Iron Warriors', '102 Maple St, Houston', 'ironwarriors@example.com',
-        'Entrenamiento de combate mixto avanzado', '555-9123', 4, NOW(), 'admin'),
+        'Entrenamiento de combate mixto avanzado', '555-9123', 4, NOW(), 'admin',
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/clubs/club9.jpg'),
        (5, 'Elite Boxing', '89 Pine St, Chicago', 'eliteboxing@example.com', 'Boxeo para profesionales y amateurs',
-        '555-8234', 5, NOW(), 'admin'),
+        '555-8234', 5, NOW(), 'admin',
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/clubs/club10.jpg'),
        (6, 'Grappling Masters', '77 Willow St, San Diego', 'grapplingmasters@example.com',
-        'Escuela de grappling y Jiu-Jitsu', '555-7654', 6, NOW(), 'admin');
+        'Escuela de grappling y Jiu-Jitsu', '555-7654', 6, NOW(), 'admin',
+        'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/clubs/club12.jpg');
 
 
 
@@ -69,17 +94,18 @@ VALUES (1, 1),
        (6, 3),
        (6, 4);
 
-INSERT INTO event (id, name, description, address, start_date, end_date, likes, organizer_id, created_at, created_by)
+INSERT INTO event (id, name, description, address, start_date, end_date, likes, organizer_id, created_at, created_by, profile_picture)
 VALUES (1, 'UFC Fight Night', 'Evento de MMA con los mejores luchadores.', 'MGM Grand, Las Vegas', '2025-04-10',
-        '2025-04-10', 100, 1, NOW(), 'admin'),
+        '2025-04-10', 100, 1, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/evento3.jpeg'),
        (2, 'Grappling Challenge', 'Torneo de Jiu-Jitsu de alto nivel.', 'Gracie Academy, Miami', '2025-05-15',
-        '2025-05-15', 50, 3, NOW(), 'admin'),
+        '2025-05-15', 50, 3, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/fight2.jpeg'),
        (3, 'MMA Grand Prix', 'Torneo de MMA con los mejores peleadores del país.', 'Staples Center, Los Angeles',
-        '2025-06-20', '2025-06-20', 75, 4, NOW(), 'admin'),
+        '2025-06-20', '2025-06-20', 75, 4, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/fight3.jpeg'
+        ),
        (4, 'Elite Boxing Night', 'Combates de boxeo de alto nivel.', 'Madison Square Garden, New York', '2025-07-15',
-        '2025-07-15', 90, 5, NOW(), 'admin'),
+        '2025-07-15', 90, 5, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/fight5.jpeg'),
        (5, 'Grappling Open', 'Competencia de Jiu-Jitsu y lucha libre.', 'San Diego Arena, San Diego', '2025-08-10',
-        '2025-08-10', 60, 6, NOW(), 'admin');
+        '2025-08-10', 60, 6, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/slider3.jpeg');
 
 INSERT INTO fight (id, event_id, blue_corner_fighter_id, red_corner_fighter_id, style_id, category_id,
                    fight_order, is_title_fight, is_closed, is_ko, is_draw, weight, rounds, minutes_per_round, likes,
@@ -92,16 +118,8 @@ VALUES (1, 1, 1, NULL, 2, 2, NULL, false, false, false, false, 70.5, 3, 5, NULL,
        (6, 3, 4, 5, 4, 2, 3, false, true, false, false, 72.0, 3, 3, 50, 4, NOW(), 'admin'),
        (7, 4, 6, 2, 1, 1, 4, true, true, false, false, 80.0, 5, 3, 80, 6, NOW(), 'admin');
 
-INSERT INTO role (id, name, created_at)
-VALUES (2, 'ROLE_ADMIN', NOW());
 
-INSERT INTO _user_roles (users_id, roles_id)
-VALUES (1, 1),
-       (2, 1),
-       (3, 2),
-       (4, 1),
-       (5, 1),
-       (6, 1);
+
 
 
 SELECT setval(pg_get_serial_sequence('_user', 'id'), (SELECT MAX(id) FROM "_user"));
