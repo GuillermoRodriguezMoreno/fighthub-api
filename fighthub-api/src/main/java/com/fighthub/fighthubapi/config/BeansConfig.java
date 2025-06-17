@@ -1,6 +1,7 @@
 package com.fighthub.fighthubapi.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -28,6 +29,9 @@ import static org.springframework.http.HttpHeaders.*;
 public class BeansConfig {
 
     private final UserDetailsService userDetailsService;
+
+    @Value("${application.openai.api-key}")
+    private String openAiKey;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -78,22 +82,20 @@ public class BeansConfig {
 
     @Bean
     public WebClient openAiWebClient() {
-        String apiKey = "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";
         return WebClient.builder()
                 .baseUrl("https://api.openai.com/v1")
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + openAiKey)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 
     @Bean
     public WebClient supabaseBucketWebClient() {
-        String apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyaGppZXlrdWllenlpaXNudmdsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NzI0OTczMiwiZXhwIjoyMDYyODI1NzMyfQ.Y34jgdivnTtx0DJGAmcPxGibEjfqSnq2NTakv77FnIs";
         String supabaseUrl = "https://srhjieykuiezyiisnvgl.supabase.co";
         return WebClient.builder()
                 .baseUrl(supabaseUrl)
-                .defaultHeader("apikey", apiKey)
-                .defaultHeader("Authorization", apiKey)
+                .defaultHeader("apikey", openAiKey)
+                .defaultHeader("Authorization", openAiKey)
                 .build();
     }
 }
