@@ -30,8 +30,14 @@ public class BeansConfig {
 
     private final UserDetailsService userDetailsService;
 
+    @Value("${application.openai.api-url}")
+    private String openAiUrl;
     @Value("${application.openai.api-key}")
     private String openAiKey;
+    @Value("${application.supabase.url}")
+    private String supabaseUrl;
+    @Value("${application.supabase.api-key}")
+    private String supabaseApiKey;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -83,7 +89,7 @@ public class BeansConfig {
     @Bean
     public WebClient openAiWebClient() {
         return WebClient.builder()
-                .baseUrl("https://api.openai.com/v1")
+                .baseUrl(openAiUrl)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + openAiKey)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
@@ -91,11 +97,10 @@ public class BeansConfig {
 
     @Bean
     public WebClient supabaseBucketWebClient() {
-        String supabaseUrl = "https://srhjieykuiezyiisnvgl.supabase.co";
         return WebClient.builder()
                 .baseUrl(supabaseUrl)
-                .defaultHeader("apikey", openAiKey)
-                .defaultHeader("Authorization", openAiKey)
+                .defaultHeader("apikey", supabaseApiKey)
+                .defaultHeader("Authorization", supabaseApiKey)
                 .build();
     }
 }

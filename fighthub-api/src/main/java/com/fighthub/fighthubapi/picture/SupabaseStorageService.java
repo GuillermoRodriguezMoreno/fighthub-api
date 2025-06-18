@@ -1,5 +1,6 @@
 package com.fighthub.fighthubapi.picture;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +12,11 @@ public class SupabaseStorageService {
 
     private final WebClient supabaseBucketWebClient;
 
+    @Value("${application.supabase.url}")
+    private String supabaseUrl;
+    @Value("${application.supabase.api-key}")
+    private String supabaseApiKey;
+
     public SupabaseStorageService(WebClient supabaseBucketWebClient) {
         this.supabaseBucketWebClient = supabaseBucketWebClient;
     }
@@ -18,7 +24,6 @@ public class SupabaseStorageService {
     public Mono<String> upload(MultipartFile file, String folder) {
         String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         String bucketName = "fighthub-pictures";
-        String supabaseUrl = "https://srhjieykuiezyiisnvgl.supabase.co";
         return supabaseBucketWebClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/storage/v1/object/{bucket}/{folder}/{file}")

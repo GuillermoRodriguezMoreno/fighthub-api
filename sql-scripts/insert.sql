@@ -105,7 +105,7 @@ VALUES (1, 'UFC Fight Night', 'Evento de MMA con los mejores luchadores.', 'MGM 
        (4, 'Elite Boxing Night', 'Combates de boxeo de alto nivel.', 'Madison Square Garden, New York', '2025-07-15',
         '2025-07-15', 90, 5, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/fight5.jpeg'),
        (5, 'Grappling Open', 'Competencia de Jiu-Jitsu y lucha libre.', 'San Diego Arena, San Diego', '2025-08-10',
-        '2025-08-10', 60, 6, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/slider3.jpeg');
+        '2025-08-10', 60, 6, NOW(), 'admin', 'https://srhjieykuiezyiisnvgl.supabase.co/storage/v1/object/public/fighthub-pictures/events/slider3.jpg');
 
 INSERT INTO fight (id, event_id, blue_corner_fighter_id, red_corner_fighter_id, style_id, category_id,
                    fight_order, is_title_fight, is_closed, is_ko, is_draw, weight, rounds, minutes_per_round, likes,

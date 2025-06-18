@@ -7,9 +7,9 @@ spring:
     #url: jdbc:postgresql://localhost:5433/fighthub
     #username: admin
     #password: admin
-    url: jdbc:postgresql://dpg-d18gj7ruibrs73d1m290-a:5432/fighthub_db
-    username: fighthub_db_user
-    password: POIzqEVwshzmkP2cVz5LwZ56ZYdd8RjO
+    url: jdbc:postgresql://postgres.railway.internal:5432/railway
+    username: postgres
+    password: xcaMdzwHwDQUcQSBHFhiPbJhCFPyERpK
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -67,4 +67,9 @@ application:
     activation-url: "http://localhost:8080/api/v1/auth/activate-account"
 
   openai:
+    api-url: ${OPENAI_API_URL}
     api-key: ${OPENAI_API_KEY}
+  supabase:
+    url: ${SUPABASE_URL}
+    api-key: ${SUPABASE_API_KEY}
+
